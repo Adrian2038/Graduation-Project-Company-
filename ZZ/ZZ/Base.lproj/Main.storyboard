@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14C1510" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="ZlA-LJ-qv3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1510" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="ZlA-LJ-qv3">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -17,19 +17,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="568" height="320"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WX5-jO-cYv">
-                                <rect key="frame" x="189" y="188" width="190" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="190" id="ruL-bb-Lr3"/>
-                                </constraints>
-                                <state key="normal" title="Host Game">
-                                    <color key="titleColor" red="0.1123525739" green="0.71171980859999995" blue="0.092745347759999999" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <segue destination="zik-HX-eAn" kind="push" identifier="Host Game" id="pX0-Q0-pX3"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sj5-6k-xfD">
                                 <rect key="frame" x="189" y="226" width="190" height="30"/>
                                 <state key="normal" title="Join Game">
@@ -40,19 +27,19 @@
                                     <segue destination="9gE-4Q-JFr" kind="push" identifier="Join Game" id="MQ4-YX-lEv"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo S.png" translatesAutoresizingMaskIntoConstraints="NO" id="ArS-av-O1D">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Logo S.png" translatesAutoresizingMaskIntoConstraints="NO" id="ArS-av-O1D">
                                 <rect key="frame" x="79" y="42" width="90" height="132"/>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo N.png" translatesAutoresizingMaskIntoConstraints="NO" id="uKd-Fl-SsR">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Logo N.png" translatesAutoresizingMaskIntoConstraints="NO" id="uKd-Fl-SsR">
                                 <rect key="frame" x="159" y="42" width="90" height="132"/>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo A.png" translatesAutoresizingMaskIntoConstraints="NO" id="Ibo-5W-eli">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Logo A.png" translatesAutoresizingMaskIntoConstraints="NO" id="Ibo-5W-eli">
                                 <rect key="frame" x="239" y="42" width="90" height="132"/>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo P.png" translatesAutoresizingMaskIntoConstraints="NO" id="eAM-Bc-6Kd">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Logo P.png" translatesAutoresizingMaskIntoConstraints="NO" id="eAM-Bc-6Kd">
                                 <rect key="frame" x="319" y="42" width="90" height="132"/>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo Joker.png" translatesAutoresizingMaskIntoConstraints="NO" id="iJi-ZR-QOU">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Logo Joker.png" translatesAutoresizingMaskIntoConstraints="NO" id="iJi-ZR-QOU">
                                 <rect key="frame" x="399" y="42" width="90" height="132"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uAc-s1-14v">
@@ -65,27 +52,30 @@
                                     <segue destination="kna-UB-dj7" kind="push" id="75h-5L-zwC"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WX5-jO-cYv">
+                                <rect key="frame" x="189" y="188" width="190" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="190" id="mRO-hB-thR"/>
+                                </constraints>
+                                <state key="normal" title="Host Game">
+                                    <color key="titleColor" red="0.1123525739" green="0.71171980859999995" blue="0.092745347759999999" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="zik-HX-eAn" kind="push" identifier="Host Game" id="pX0-Q0-pX3"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.44313728810000003" blue="0.1215686351" alpha="1" colorSpace="deviceRGB"/>
                         <constraints>
-                            <constraint firstItem="WX5-jO-cYv" firstAttribute="top" secondItem="uKd-Fl-SsR" secondAttribute="bottom" constant="14" id="2uZ-ht-f7z"/>
-                            <constraint firstItem="sj5-6k-xfD" firstAttribute="top" secondItem="WX5-jO-cYv" secondAttribute="bottom" constant="8" symbolic="YES" id="41N-jb-Gjw"/>
-                            <constraint firstItem="sj5-6k-xfD" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="45O-NC-HdR"/>
-                            <constraint firstItem="ArS-av-O1D" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="22" id="8lC-wY-8pB"/>
-                            <constraint firstItem="uKd-Fl-SsR" firstAttribute="top" secondItem="Ibo-5W-eli" secondAttribute="top" id="AUg-7F-8JY"/>
-                            <constraint firstItem="eAM-Bc-6Kd" firstAttribute="leading" secondItem="uKd-Fl-SsR" secondAttribute="trailing" constant="70" id="DK2-hg-8HH"/>
-                            <constraint firstItem="uAc-s1-14v" firstAttribute="leading" secondItem="sj5-6k-xfD" secondAttribute="leading" id="HAN-Pq-3OC"/>
-                            <constraint firstItem="uAc-s1-14v" firstAttribute="top" secondItem="sj5-6k-xfD" secondAttribute="bottom" constant="8" symbolic="YES" id="Lw3-qp-gZP"/>
-                            <constraint firstItem="ArS-av-O1D" firstAttribute="top" secondItem="uKd-Fl-SsR" secondAttribute="top" id="N9S-7b-rd1"/>
-                            <constraint firstItem="uAc-s1-14v" firstAttribute="trailing" secondItem="sj5-6k-xfD" secondAttribute="trailing" id="QdY-6K-Ub6"/>
-                            <constraint firstItem="eAM-Bc-6Kd" firstAttribute="top" secondItem="iJi-ZR-QOU" secondAttribute="top" id="T0f-3u-AhM"/>
-                            <constraint firstItem="Ibo-5W-eli" firstAttribute="leading" secondItem="ArS-av-O1D" secondAttribute="trailing" constant="70" id="YbF-0O-Io6"/>
-                            <constraint firstItem="WX5-jO-cYv" firstAttribute="centerX" secondItem="Ibo-5W-eli" secondAttribute="centerX" id="aKD-JR-7gH"/>
-                            <constraint firstItem="WX5-jO-cYv" firstAttribute="leading" secondItem="sj5-6k-xfD" secondAttribute="leading" id="gJi-GO-aqh"/>
-                            <constraint firstItem="iJi-ZR-QOU" firstAttribute="leading" secondItem="Ibo-5W-eli" secondAttribute="trailing" constant="70" id="ibw-me-Nrn"/>
-                            <constraint firstItem="Ibo-5W-eli" firstAttribute="top" secondItem="eAM-Bc-6Kd" secondAttribute="top" id="jR8-hB-S6M"/>
-                            <constraint firstItem="sj5-6k-xfD" firstAttribute="trailing" secondItem="WX5-jO-cYv" secondAttribute="trailing" id="xs9-u5-J2e"/>
-                            <constraint firstItem="uKd-Fl-SsR" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="159" id="zL7-kj-rlO"/>
+                            <constraint firstItem="uAc-s1-14v" firstAttribute="width" secondItem="sj5-6k-xfD" secondAttribute="width" id="BCR-44-kZ4"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="uAc-s1-14v" secondAttribute="bottom" constant="26" id="Hwc-bu-ckh"/>
+                            <constraint firstItem="uAc-s1-14v" firstAttribute="centerX" secondItem="sj5-6k-xfD" secondAttribute="centerX" id="Pwb-2q-Ftj"/>
+                            <constraint firstItem="uAc-s1-14v" firstAttribute="width" secondItem="WX5-jO-cYv" secondAttribute="width" id="arW-Se-j8c"/>
+                            <constraint firstAttribute="centerX" secondItem="WX5-jO-cYv" secondAttribute="centerX" id="b2h-12-uJF"/>
+                            <constraint firstItem="uAc-s1-14v" firstAttribute="top" secondItem="sj5-6k-xfD" secondAttribute="bottom" constant="8" id="bno-9I-AAL"/>
+                            <constraint firstItem="WX5-jO-cYv" firstAttribute="centerX" secondItem="sj5-6k-xfD" secondAttribute="centerX" id="wCg-Fl-Hj6"/>
+                            <constraint firstItem="sj5-6k-xfD" firstAttribute="top" secondItem="WX5-jO-cYv" secondAttribute="bottom" constant="8" id="yZN-fM-ODI"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="4VK-YS-9hR"/>
@@ -104,7 +94,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="629" y="381"/>
+            <point key="canvasLocation" x="641" y="381"/>
         </scene>
         <!--Host View Controller-->
         <scene sceneID="ScO-K4-npW">
@@ -317,7 +307,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QJb-ys-NlO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5" y="401"/>
+            <point key="canvasLocation" x="-8" y="381"/>
         </scene>
     </scenes>
     <resources>
