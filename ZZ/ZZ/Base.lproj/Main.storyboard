@@ -2,7 +2,6 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1510" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="ZlA-LJ-qv3">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Main View Controller-->
@@ -48,9 +47,6 @@
                                     <color key="titleColor" red="0.1123525739" green="0.71171980859999995" blue="0.092745347759999999" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <connections>
-                                    <segue destination="kna-UB-dj7" kind="push" id="75h-5L-zwC"/>
-                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WX5-jO-cYv">
                                 <rect key="frame" x="189" y="188" width="190" height="30"/>
@@ -126,7 +122,7 @@
                                 <color key="textColor" red="0.1123525739" green="0.71171980859999995" blue="0.092745347759999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Placeholder" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="BiS-9u-sib">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Placeholder" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="BiS-9u-sib">
                                 <rect key="frame" x="216" y="65" width="230" height="30"/>
                                 <color key="backgroundColor" red="0.0" green="0.44313728810000003" blue="0.1215686351" alpha="1" colorSpace="deviceRGB"/>
                                 <color key="textColor" red="0.1123525739" green="0.71171980859999995" blue="0.092745347759999999" alpha="1" colorSpace="calibratedRGB"/>
@@ -182,41 +178,6 @@
             </objects>
             <point key="canvasLocation" x="1532" y="-121"/>
         </scene>
-        <!--Single Play View Controller-->
-        <scene sceneID="oLZ-s5-Lg0">
-            <objects>
-                <viewController id="kna-UB-dj7" customClass="SinglePlayViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="qaX-XO-HeH"/>
-                        <viewControllerLayoutGuide type="bottom" id="tkM-zp-5T0"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="HB2-5o-Hzb">
-                        <rect key="frame" x="0.0" y="0.0" width="568" height="320"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kx2-vg-0QI">
-                                <rect key="frame" x="16" y="282" width="42" height="30"/>
-                                <state key="normal" title="BACK">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="popToTop:" destination="kna-UB-dj7" eventType="touchUpInside" id="7F8-5D-ASB"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" red="0.0" green="0.44313728810000003" blue="0.1215686351" alpha="1" colorSpace="deviceRGB"/>
-                        <constraints>
-                            <constraint firstItem="kx2-vg-0QI" firstAttribute="leading" secondItem="HB2-5o-Hzb" secondAttribute="leadingMargin" id="V29-Qh-TiF"/>
-                            <constraint firstItem="tkM-zp-5T0" firstAttribute="top" secondItem="kx2-vg-0QI" secondAttribute="bottom" constant="8" symbolic="YES" id="nxp-2f-8VH"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" id="cv0-Vw-bvA"/>
-                    <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Xcg-BC-EUI" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1539" y="744"/>
-        </scene>
         <!--Join View Controller-->
         <scene sceneID="dRY-9o-3EC">
             <objects>
@@ -247,7 +208,7 @@
                                 <color key="textColor" red="0.1123525739" green="0.71171980859999995" blue="0.092745347759999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Placeholder" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7HT-OM-hiW">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Placeholder" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7HT-OM-hiW">
                                 <rect key="frame" x="216" y="69" width="230" height="30"/>
                                 <color key="backgroundColor" red="0.0" green="0.44313728810000003" blue="0.1215686351" alpha="1" colorSpace="deviceRGB"/>
                                 <color key="textColor" red="0.1123525739" green="0.71171980859999995" blue="0.092745347759999999" alpha="1" colorSpace="calibratedRGB"/>

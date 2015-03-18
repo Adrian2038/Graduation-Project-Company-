@@ -9,6 +9,7 @@
 #import "HostViewController.h"
 #import "UIButton+SnapAdditions.h"
 #import "UIFont+SnapAdditions.h"
+#import "MatchmakingServer.h"
 
 @interface HostViewController () <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate>
 
@@ -19,6 +20,8 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIButton *startButton;
 
+@property (nonatomic, strong) MatchmakingServer *matchmakingServer;
+
 @end
 
 @implementation HostViewController
@@ -26,6 +29,17 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    if (!_matchmakingServer) {
+        _matchmakingServer = [[MatchmakingServer alloc] init];
+        _matchmakingServer.maxClients = 7;
+        [_matchmakingServer startAcceptingConnectionsForSessionID:SESSION_ID];
+        
+        
+        self.nameTextField.placeholder = _matchmakingServer.session.displayName;
+        NSLog(@"display name = %@", _matchmakingServer.session.displayName);
+        [self.tableView reloadData];
+    }
     
     self.headingLabel.font = [UIFont rw_snapFontWithSize:24.0f];
     self.nameLabel.font = [UIFont rw_snapFontWithSize:16.0f];
@@ -41,6 +55,7 @@
     
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
+    
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

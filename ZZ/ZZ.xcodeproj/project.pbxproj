@@ -50,6 +50,9 @@
 		5372777B1AB29B12001D5649 /* TextField.png in Resources */ = {isa = PBXBuildFile; fileRef = 537277541AB29B12001D5649 /* TextField.png */; };
 		5372777C1AB29B12001D5649 /* TextField@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 537277551AB29B12001D5649 /* TextField@2x.png */; };
 		5372777E1AB29BED001D5649 /* Set-game-cards.png in Resources */ = {isa = PBXBuildFile; fileRef = 5372777D1AB29BED001D5649 /* Set-game-cards.png */; };
+		538600331AB9113700E554E6 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 538600321AB9113700E554E6 /* GameKit.framework */; };
+		538600371AB911F700E554E6 /* MatchmakingServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 538600361AB911F700E554E6 /* MatchmakingServer.m */; };
+		538600391AB9160C00E554E6 /* MultipeerConnectivity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 538600381AB9160C00E554E6 /* MultipeerConnectivity.framework */; };
 		53AFC8E61AB285E200DBFCAE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AFC8E51AB285E200DBFCAE /* main.m */; };
 		53AFC8E91AB285E200DBFCAE /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AFC8E81AB285E200DBFCAE /* AppDelegate.m */; };
 		53AFC8EF1AB285E200DBFCAE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 53AFC8ED1AB285E200DBFCAE /* Main.storyboard */; };
@@ -118,6 +121,10 @@
 		537277541AB29B12001D5649 /* TextField.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TextField.png; sourceTree = "<group>"; };
 		537277551AB29B12001D5649 /* TextField@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TextField@2x.png"; sourceTree = "<group>"; };
 		5372777D1AB29BED001D5649 /* Set-game-cards.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Set-game-cards.png"; sourceTree = "<group>"; };
+		538600321AB9113700E554E6 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
+		538600351AB911F700E554E6 /* MatchmakingServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MatchmakingServer.h; path = Networking/MatchmakingServer.h; sourceTree = "<group>"; };
+		538600361AB911F700E554E6 /* MatchmakingServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MatchmakingServer.m; path = Networking/MatchmakingServer.m; sourceTree = "<group>"; };
+		538600381AB9160C00E554E6 /* MultipeerConnectivity.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MultipeerConnectivity.framework; path = System/Library/Frameworks/MultipeerConnectivity.framework; sourceTree = SDKROOT; };
 		53AFC8E01AB285E200DBFCAE /* ZZ.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZZ.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		53AFC8E41AB285E200DBFCAE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		53AFC8E51AB285E200DBFCAE /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -145,6 +152,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				538600391AB9160C00E554E6 /* MultipeerConnectivity.framework in Frameworks */,
+				538600331AB9113700E554E6 /* GameKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -216,9 +225,20 @@
 			path = Images;
 			sourceTree = "<group>";
 		};
+		538600341AB911CB00E554E6 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				538600351AB911F700E554E6 /* MatchmakingServer.h */,
+				538600361AB911F700E554E6 /* MatchmakingServer.m */,
+			);
+			name = Networking;
+			sourceTree = "<group>";
+		};
 		53AFC8D71AB285E200DBFCAE = {
 			isa = PBXGroup;
 			children = (
+				538600381AB9160C00E554E6 /* MultipeerConnectivity.framework */,
+				538600321AB9113700E554E6 /* GameKit.framework */,
 				53AFC8E21AB285E200DBFCAE /* ZZ */,
 				53AFC8FC1AB285E200DBFCAE /* ZZTests */,
 				53AFC8E11AB285E200DBFCAE /* Products */,
@@ -241,6 +261,7 @@
 				53AFC8F01AB285E200DBFCAE /* Images.xcassets */,
 				53AFC8F21AB285E200DBFCAE /* LaunchScreen.xib */,
 				53AFC90C1AB2914300DBFCAE /* Controller */,
+				538600341AB911CB00E554E6 /* Networking */,
 				531E61FB1AB2C71A003A0013 /* Categories */,
 				5372772E1AB29B12001D5649 /* Images */,
 				53AFC8E31AB285E200DBFCAE /* Supporting Files */,
@@ -438,6 +459,7 @@
 				53AFC90B1AB2912900DBFCAE /* HostViewController.m in Sources */,
 				53AFC9121AB292C700DBFCAE /* SinglePlayViewController.m in Sources */,
 				531E62011AB2C71A003A0013 /* UIFont+SnapAdditions.m in Sources */,
+				538600371AB911F700E554E6 /* MatchmakingServer.m in Sources */,
 				53AFC90F1AB292AB00DBFCAE /* JoinViewController.m in Sources */,
 				53AFC9151AB292D400DBFCAE /* MainViewController.m in Sources */,
 				53AFC8E91AB285E200DBFCAE /* AppDelegate.m in Sources */,

@@ -14,5 +14,10 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import <GameKit/GameKit.h>
+#import <MultipeerConnectivity/MultipeerConnectivity.h>
+
+// The name of GameKit session
+#define SESSION_ID @"Snap!"
 
 #endif
