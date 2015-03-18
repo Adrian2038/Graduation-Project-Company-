@@ -7,11 +7,26 @@
 //
 
 
+@class MatchmakingClient;
+
+@protocol MatchmakingClientDelegate <NSObject>
+
+- (void)matchmakingClient:(MatchmakingClient *)client serverBecameAvailable:(NSString *)peerID;
+- (void)matchmakingClient:(MatchmakingClient *)client serverBecameUnavailable:(NSString *)peerID;
+
+@end
+
+
 @interface MatchmakingClient : NSObject <GKSessionDelegate>
+
+@property (nonatomic, weak) id <MatchmakingClientDelegate> delegate;
 
 @property (nonatomic, strong, readonly) NSArray *availableServers;
 @property (nonatomic, strong, readonly) GKSession *session;
 
 - (void)startSearchingForServerWithSessionID:(NSString *)sessionID;
+- (NSUInteger)availableServerCount;
+- (NSString *)peerIDForAvailableServerAtIndex:(NSInteger)index;
+- (NSString *)displayNameForPeerID:(NSString *)peerID;
 
 @end

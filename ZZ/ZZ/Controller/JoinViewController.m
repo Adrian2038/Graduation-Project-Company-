@@ -9,17 +9,19 @@
 #import "JoinViewController.h"
 #import "UIFont+SnapAdditions.h"
 #import "MatchmakingClient.h"
+#import "PeerCell.h"
 
+@interface JoinViewController () <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, MatchmakingClientDelegate>
 
-@interface JoinViewController () <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate>
+{
+    MatchmakingClient *_matchmakingClient;
+}
 
 @property (weak, nonatomic) IBOutlet UILabel *headingLabel;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UITextField *nameTextField;
 @property (weak, nonatomic) IBOutlet UILabel *statusLabel;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-
-@property (nonatomic, strong) MatchmakingClient *matchmakingClient;
 
 @end
 
@@ -32,6 +34,7 @@
     
     if (!_matchmakingClient) {
         _matchmakingClient = [[MatchmakingClient alloc] init];
+        _matchmakingClient.delegate = self;
         [_matchmakingClient startSearchingForServerWithSessionID:SESSION_ID];
         
         self.nameTextField.placeholder = _matchmakingClient.session.displayName;
@@ -73,7 +76,11 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 3;
+    if (_matchmakingClient) {
+        return [_matchmakingClient availableServerCount];
+    } else {
+        return 0;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -81,21 +88,26 @@
     static NSString *cellID = @"cellID";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
     if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
+        cell = [[PeerCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
     }
     cell.backgroundColor = [UIColor grayColor];
 
-    NSString *name = nil;
-    switch (indexPath.row) {
-        case 0: name = @"Tom"; break;
-        case 1: name = @"Jack"; break;
-        case 2: name = @"Taylor Swift"; break;
-        default: break;
-    }
-    cell.textLabel.text = name;
+    NSString *peerID = [_matchmakingClient peerIDForAvailableServerAtIndex:indexPath.row];
+    cell.textLabel.text = [_matchmakingClient displayNameForPeerID:peerID];
+    
     return cell;
 }
 
+#pragma mark - MatchmakingClientDelegate 
 
+- (void)matchmakingClient:(MatchmakingClient *)client serverBecameAvailable:(NSString *)peerID
+{
+    [self.tableView reloadData];
+}
+
+- (void)matchmakingClient:(MatchmakingClient *)client serverBecameUnavailable:(NSString *)peerID
+{
+    [self.tableView reloadData];
+}
 
 @end

@@ -10,7 +10,9 @@
 
 @interface MatchmakingServer ()
 
-@property (nonatomic, strong) NSMutableArray *connectedClients;
+{
+    NSMutableArray *_connectedClients;
+}
 
 @end
 
