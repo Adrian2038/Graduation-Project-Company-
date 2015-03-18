@@ -8,6 +8,7 @@
 
 #import "JoinViewController.h"
 #import "UIFont+SnapAdditions.h"
+#import "MatchmakingClient.h"
 
 
 @interface JoinViewController () <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate>
@@ -18,6 +19,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *statusLabel;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
+@property (nonatomic, strong) MatchmakingClient *matchmakingClient;
+
 @end
 
 @implementation JoinViewController
@@ -26,6 +29,14 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    if (!_matchmakingClient) {
+        _matchmakingClient = [[MatchmakingClient alloc] init];
+        [_matchmakingClient startSearchingForServerWithSessionID:SESSION_ID];
+        
+        self.nameTextField.placeholder = _matchmakingClient.session.displayName;
+        [self.tableView reloadData];
+    }
     
     self.headingLabel.font = [UIFont rw_snapFontWithSize:24.0f];
     self.nameLabel.font = [UIFont rw_snapFontWithSize:16.0f];

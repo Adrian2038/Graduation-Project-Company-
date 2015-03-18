@@ -19,6 +19,8 @@
 - (void)startAcceptingConnectionsForSessionID:(NSString *)sessionID
 {
  
+    _connectedClients = [NSMutableArray arrayWithCapacity:self.maxClients];
+
     _session = [[GKSession alloc] initWithSessionID:sessionID displayName:nil sessionMode:GKSessionModeServer];
     _session.delegate = self;
     _session.available = YES;
@@ -29,10 +31,6 @@
 
 - (NSArray *)connectedClients
 {
-  
-    if (_connectedClients) {
-        _connectedClients = [NSMutableArray arrayWithCapacity:self.maxClients];
-    }
     return _connectedClients;
 }
 

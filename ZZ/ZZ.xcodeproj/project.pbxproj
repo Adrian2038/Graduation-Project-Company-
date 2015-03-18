@@ -53,6 +53,7 @@
 		538600331AB9113700E554E6 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 538600321AB9113700E554E6 /* GameKit.framework */; };
 		538600371AB911F700E554E6 /* MatchmakingServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 538600361AB911F700E554E6 /* MatchmakingServer.m */; };
 		538600391AB9160C00E554E6 /* MultipeerConnectivity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 538600381AB9160C00E554E6 /* MultipeerConnectivity.framework */; };
+		5386003C1AB9204A00E554E6 /* MatchmakingClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 5386003B1AB9204A00E554E6 /* MatchmakingClient.m */; };
 		53AFC8E61AB285E200DBFCAE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AFC8E51AB285E200DBFCAE /* main.m */; };
 		53AFC8E91AB285E200DBFCAE /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AFC8E81AB285E200DBFCAE /* AppDelegate.m */; };
 		53AFC8EF1AB285E200DBFCAE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 53AFC8ED1AB285E200DBFCAE /* Main.storyboard */; };
@@ -61,7 +62,6 @@
 		53AFC9001AB285E200DBFCAE /* ZZTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AFC8FF1AB285E200DBFCAE /* ZZTests.m */; };
 		53AFC90B1AB2912900DBFCAE /* HostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AFC90A1AB2912900DBFCAE /* HostViewController.m */; };
 		53AFC90F1AB292AB00DBFCAE /* JoinViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AFC90E1AB292AB00DBFCAE /* JoinViewController.m */; };
-		53AFC9121AB292C700DBFCAE /* SinglePlayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AFC9111AB292C700DBFCAE /* SinglePlayViewController.m */; };
 		53AFC9151AB292D400DBFCAE /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AFC9141AB292D400DBFCAE /* MainViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -125,6 +125,8 @@
 		538600351AB911F700E554E6 /* MatchmakingServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MatchmakingServer.h; path = Networking/MatchmakingServer.h; sourceTree = "<group>"; };
 		538600361AB911F700E554E6 /* MatchmakingServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MatchmakingServer.m; path = Networking/MatchmakingServer.m; sourceTree = "<group>"; };
 		538600381AB9160C00E554E6 /* MultipeerConnectivity.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MultipeerConnectivity.framework; path = System/Library/Frameworks/MultipeerConnectivity.framework; sourceTree = SDKROOT; };
+		5386003A1AB9204A00E554E6 /* MatchmakingClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MatchmakingClient.h; path = Networking/MatchmakingClient.h; sourceTree = "<group>"; };
+		5386003B1AB9204A00E554E6 /* MatchmakingClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MatchmakingClient.m; path = Networking/MatchmakingClient.m; sourceTree = "<group>"; };
 		53AFC8E01AB285E200DBFCAE /* ZZ.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZZ.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		53AFC8E41AB285E200DBFCAE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		53AFC8E51AB285E200DBFCAE /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -140,8 +142,6 @@
 		53AFC90A1AB2912900DBFCAE /* HostViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HostViewController.m; path = Controller/HostViewController.m; sourceTree = "<group>"; };
 		53AFC90D1AB292AB00DBFCAE /* JoinViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JoinViewController.h; path = Controller/JoinViewController.h; sourceTree = "<group>"; };
 		53AFC90E1AB292AB00DBFCAE /* JoinViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JoinViewController.m; path = Controller/JoinViewController.m; sourceTree = "<group>"; };
-		53AFC9101AB292C700DBFCAE /* SinglePlayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SinglePlayViewController.h; path = Controller/SinglePlayViewController.h; sourceTree = "<group>"; };
-		53AFC9111AB292C700DBFCAE /* SinglePlayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SinglePlayViewController.m; path = Controller/SinglePlayViewController.m; sourceTree = "<group>"; };
 		53AFC9131AB292D400DBFCAE /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainViewController.h; path = Controller/MainViewController.h; sourceTree = "<group>"; };
 		53AFC9141AB292D400DBFCAE /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MainViewController.m; path = Controller/MainViewController.m; sourceTree = "<group>"; };
 		8BE265C51AB46B8300FCABE1 /* ZZHeaderPch.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZZHeaderPch.pch; sourceTree = "<group>"; };
@@ -230,6 +230,8 @@
 			children = (
 				538600351AB911F700E554E6 /* MatchmakingServer.h */,
 				538600361AB911F700E554E6 /* MatchmakingServer.m */,
+				5386003A1AB9204A00E554E6 /* MatchmakingClient.h */,
+				5386003B1AB9204A00E554E6 /* MatchmakingClient.m */,
 			);
 			name = Networking;
 			sourceTree = "<group>";
@@ -308,8 +310,6 @@
 				53AFC90A1AB2912900DBFCAE /* HostViewController.m */,
 				53AFC90D1AB292AB00DBFCAE /* JoinViewController.h */,
 				53AFC90E1AB292AB00DBFCAE /* JoinViewController.m */,
-				53AFC9101AB292C700DBFCAE /* SinglePlayViewController.h */,
-				53AFC9111AB292C700DBFCAE /* SinglePlayViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -457,8 +457,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				53AFC90B1AB2912900DBFCAE /* HostViewController.m in Sources */,
-				53AFC9121AB292C700DBFCAE /* SinglePlayViewController.m in Sources */,
 				531E62011AB2C71A003A0013 /* UIFont+SnapAdditions.m in Sources */,
+				5386003C1AB9204A00E554E6 /* MatchmakingClient.m in Sources */,
 				538600371AB911F700E554E6 /* MatchmakingServer.m in Sources */,
 				53AFC90F1AB292AB00DBFCAE /* JoinViewController.m in Sources */,
 				53AFC9151AB292D400DBFCAE /* MainViewController.m in Sources */,
