@@ -11,7 +11,8 @@
 #import "UIFont+SnapAdditions.h"
 #import "MatchmakingServer.h"
 
-@interface HostViewController () <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate>
+@interface HostViewController ()
+<UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *headingLabel;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
@@ -48,7 +49,9 @@
  
     [self.startButton rw_applySnapStyle];
  
-    UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self.nameTextField action:@selector(resignFirstResponder)];
+    UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc]
+                                                 initWithTarget:self.nameTextField
+                                                 action:@selector(resignFirstResponder)];
     [self.view addGestureRecognizer:gestureRecognizer];
     
     self.nameTextField.delegate = self;
@@ -95,12 +98,14 @@
     return 3;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+- (UITableViewCell *)tableView:(UITableView *)tableView
+         cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *cellID = @"cellID";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
     if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                      reuseIdentifier:cellID];
     }    
     NSString *name = nil;
     switch (indexPath.row) {

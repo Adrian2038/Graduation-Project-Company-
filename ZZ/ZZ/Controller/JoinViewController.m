@@ -11,11 +11,16 @@
 #import "MatchmakingClient.h"
 #import "PeerCell.h"
 
-@interface JoinViewController () <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, MatchmakingClientDelegate>
+@interface JoinViewController ()
+<UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, MatchmakingClientDelegate>
 
 {
     MatchmakingClient *_matchmakingClient;
 }
+
+@property (nonatomic, strong) UIView *connectionView;
+@property (nonatomic, strong) UILabel *connectionViewLabel;
+@property (nonatomic, strong) UIButton *connectionViewExitButton;
 
 @property (weak, nonatomic) IBOutlet UILabel *headingLabel;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
@@ -46,13 +51,33 @@
     self.statusLabel.font = [UIFont rw_snapFontWithSize:16.0f];
     self.nameTextField.font = [UIFont rw_snapFontWithSize:20.0f];
     
-    UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self.nameTextField action:@selector(resignFirstResponder)];
+    UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc]
+                                                 initWithTarget:self.nameTextField
+                                                 action:@selector(resignFirstResponder)];
     [self.view addGestureRecognizer:gestureRecognizer];
     
     self.nameTextField.delegate = self;
     
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
+    
+    // Init all the contents of connection view.
+    self.connectionView = [[UIView alloc] initWithFrame:self.view.bounds];
+    self.connectionView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Felt"]];
+    
+    CGRect labelFrame = CGRectMake(self.view.center.x, self.view.center.y, 100, 20);
+    self.connectionViewLabel = [[UILabel alloc] initWithFrame:labelFrame];
+    self.connectionViewLabel.text = @"Connecting";
+    self.connectionViewLabel.textAlignment = NSTextAlignmentCenter;
+    self.connectionViewLabel.font = [UIFont rw_snapFontWithSize:16.0f];
+    [self.connectionView addSubview:self.connectionViewLabel];
+    
+    CGRect buttonFrame = CGRectMake(16, self.view.self.bounds.size.height - 8, 28, 28);
+    self.connectionViewExitButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [self.connectionViewExitButton setFrame:buttonFrame];
+    [self.connectionViewExitButton setBackgroundImage:[UIImage imageNamed:@"ExitButton"]
+                                             forState:UIControlStateNormal];
+    [self.connectionView addSubview:self.connectionViewExitButton];
 }
 
 
@@ -72,7 +97,7 @@
     return NO;
 }
 
-#pragma mark - UITableViewDataSource & UITableViewDelegate
+#pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -83,17 +108,35 @@
     }
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+- (UITableViewCell *)tableView:(UITableView *)tableView
+         cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *cellID = @"cellID";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
     if (!cell) {
-        cell = [[PeerCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
+        cell = [[PeerCell alloc] initWithStyle:UITableViewCellStyleDefault
+                               reuseIdentifier:cellID];
     }
     NSString *peerID = [_matchmakingClient peerIDForAvailableServerAtIndex:indexPath.row];
     cell.textLabel.text = [_matchmakingClient displayNameForPeerID:peerID];
     
     return cell;
+}
+
+#pragma mark - UITableViewDelegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSLog(@"select......");
+    // Because I don't want any selection anymore .
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    if (_matchmakingClient) {
+        [self.view addSubview:self.connectionView];
+        
+        NSString *peerID = [_matchmakingClient peerIDForAvailableServerAtIndex:indexPath.row];
+        [_matchmakingClient connectToServerWithPeerID:peerID];
+    }
 }
 
 #pragma mark - MatchmakingClientDelegate 

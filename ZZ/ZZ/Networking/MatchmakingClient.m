@@ -22,6 +22,7 @@ typedef enum
 {
     NSMutableArray *_availableServers;
     ClientState _clientState;
+    NSString *_serverPeerID;
 }
 
 @end
@@ -47,7 +48,9 @@ typedef enum
         
         _availableServers = [NSMutableArray arrayWithCapacity:10];
         
-        _session = [[GKSession alloc] initWithSessionID:sessionID displayName:nil sessionMode:GKSessionModeClient];
+        _session = [[GKSession alloc] initWithSessionID:sessionID
+                                            displayName:nil
+                                            sessionMode:GKSessionModeClient];
         _session.delegate = self;
         _session.available = YES;
     }
@@ -71,6 +74,15 @@ typedef enum
 - (NSString *)displayNameForPeerID:(NSString *)peerID
 {
     return [_session displayNameForPeer:peerID];
+}
+
+- (void)connectToServerWithPeerID:(NSString *)peerID
+{
+    NSAssert(_clientState == ClientStateSearchingForServers, @"Wrong state");
+    
+    _clientState = ClientStateConnecting;
+    _serverPeerID = peerID;
+    [_session connectToPeer:peerID withTimeout:_session.disconnectTimeout];
 }
 
 #pragma mark - GKSessionDelegate

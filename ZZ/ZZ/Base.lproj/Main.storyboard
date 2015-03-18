@@ -135,8 +135,8 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="TableViewBorder.png" translatesAutoresizingMaskIntoConstraints="NO" id="16f-4q-eij">
                                 <rect key="frame" x="24" y="139" width="528" height="116"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Txg-sT-67e">
-                                <rect key="frame" x="16" y="273" width="55" height="39"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Txg-sT-67e">
+                                <rect key="frame" x="16" y="284" width="28" height="28"/>
                                 <state key="normal" image="ExitButton.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -162,6 +162,10 @@
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.44313728810000003" blue="0.1215686351" alpha="1" colorSpace="deviceRGB"/>
+                        <constraints>
+                            <constraint firstItem="Txg-sT-67e" firstAttribute="leading" secondItem="A4Y-Pe-jlN" secondAttribute="leading" constant="16" id="Irk-do-rXl"/>
+                            <constraint firstAttribute="bottom" secondItem="Txg-sT-67e" secondAttribute="bottom" constant="8" id="O0m-pB-z4W"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="JmX-QX-HPv"/>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
