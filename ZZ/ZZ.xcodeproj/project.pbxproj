@@ -251,8 +251,6 @@
 		53AFC8D71AB285E200DBFCAE = {
 			isa = PBXGroup;
 			children = (
-				538600381AB9160C00E554E6 /* MultipeerConnectivity.framework */,
-				538600321AB9113700E554E6 /* GameKit.framework */,
 				53AFC8E21AB285E200DBFCAE /* ZZ */,
 				53AFC8FC1AB285E200DBFCAE /* ZZTests */,
 				53AFC8E11AB285E200DBFCAE /* Products */,
@@ -287,6 +285,8 @@
 		53AFC8E31AB285E200DBFCAE /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				538600381AB9160C00E554E6 /* MultipeerConnectivity.framework */,
+				538600321AB9113700E554E6 /* GameKit.framework */,
 				53AFC8E71AB285E200DBFCAE /* AppDelegate.h */,
 				53AFC8E81AB285E200DBFCAE /* AppDelegate.m */,
 				53AFC8E41AB285E200DBFCAE /* Info.plist */,

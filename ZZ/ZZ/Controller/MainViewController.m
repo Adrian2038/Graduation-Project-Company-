@@ -59,18 +59,16 @@
         if ([segue.destinationViewController isKindOfClass:[HostViewController class]]) {
             HostViewController *controller = (HostViewController *)segue.destinationViewController;
             controller.delegate = self;
-            NSLog(@"host delegate = %@", self);
         }
     } else if ([segue.identifier isEqualToString:@"Join Game"]) {
         if ([segue.destinationViewController isKindOfClass:[JoinViewController class]]) {
             JoinViewController *controller = (JoinViewController *)segue.destinationViewController;
             controller.delegate = self;
-            NSLog(@"join delegate = %@", self);
         }
     }
 }
 
-#pragma mark - Animation  ... Something wrong with the animation
+#pragma mark - Animation  ... Something wrong with the animation, and the animation may not be used
 
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -212,8 +210,10 @@
 
 - (void)hostViewControllerDidCancel:(HostViewController *)controller
 {
-//    [self.navigationController dismissViewControllerAnimated:NO completion:nil];
+
 }
+
+#pragma mark - JoinViewControllerDelegate
 
 - (void)joinViewControllerDidCancel:(JoinViewController *)controller
 {

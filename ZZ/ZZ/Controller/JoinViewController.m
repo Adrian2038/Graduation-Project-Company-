@@ -90,8 +90,6 @@
     if (!cell) {
         cell = [[PeerCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
     }
-    cell.backgroundColor = [UIColor grayColor];
-
     NSString *peerID = [_matchmakingClient peerIDForAvailableServerAtIndex:indexPath.row];
     cell.textLabel.text = [_matchmakingClient displayNameForPeerID:peerID];
     

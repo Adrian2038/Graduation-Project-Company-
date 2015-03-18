@@ -101,9 +101,7 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
-    }
-    cell.backgroundColor = [UIColor grayColor];
-    
+    }    
     NSString *name = nil;
     switch (indexPath.row) {
         case 0: name = @"Tom"; break;
