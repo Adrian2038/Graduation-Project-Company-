@@ -213,7 +213,20 @@
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Disconneced",
                                                                                   @"Client disconnected alert title")
                                                         message:NSLocalizedString(@"You were disconnected from the game",
-                                                                                  @"Client disconnected alert message") delegate:nil
+                                                                                  @"Client disconnected alert message")
+                                                       delegate:nil
+                                              cancelButtonTitle:NSLocalizedString(@"OK", @"Button : OK")
+                                              otherButtonTitles:nil];
+    [alertView show];
+}
+
+- (void)showNoNetworkAlert
+{
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"No Network",
+                                                                                  @"No network alert title")
+                                                        message:NSLocalizedString(@"To use multiplayer, please enable you Bluooth or WI-FI in your device's setting ",
+                                                                                  @"No network alert message")
+                                                       delegate:nil
                                               cancelButtonTitle:NSLocalizedString(@"OK", @"Button : OK")
                                               otherButtonTitles:nil];
     [alertView show];
@@ -235,7 +248,10 @@
 
 - (void)joinViewController:(JoinViewController *)controller didDisconnectWithReason:(QuitReason)reason
 {
-    if (reason == QuitReasonConnectionDropped) {
+    if (reason == QuitReasonNoNetwork) {
+        [self showNoNetworkAlert];
+    }
+    else if (reason == QuitReasonConnectionDropped) {
         [self.navigationController dismissViewControllerAnimated:NO completion:^
         {
             [self showDisconnectAlert];

@@ -121,6 +121,9 @@ ClientState;
                     [self.delegate matchmakingClient:self serverBecameAvailable:peerID];
                 }
             }
+            if (_clientState == ClientStateConnecting && [peerID isEqualToString:_serverPeerID]) {
+                [self disconnectFromServer];
+            }
             break;
             
             // The client sees a server goes away.
@@ -169,6 +172,13 @@ ClientState;
 - (void)session:(GKSession *)session didFailWithError:(NSError *)error
 {
     NSLog(@"MatchmakingClient : session failed : %@ ", error);
+    
+    if ([[error domain] isEqualToString:GKSessionErrorDomain]) {
+        if ([error code] == GKSessionCannotEnableError) {
+            [self.delegate matchmakingClientNoNetwork:self];
+            [self disconnectFromServer];
+        }
+    }
 }
 
 

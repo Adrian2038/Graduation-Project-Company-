@@ -177,4 +177,9 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+- (void)matchmakingClientNoNetwork:(MatchmakingClient *)client
+{
+    _quitReason = QuitReasonNoNetwork;
+}
+
 @end
