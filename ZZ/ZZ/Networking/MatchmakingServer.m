@@ -13,7 +13,8 @@ typedef enum
     ServerStateIdel,
     ServerStateAcceptingConnections,
     ServerStateIgnoringNewConnections,
-}ServerState;
+}
+ServerState;
 
 @interface MatchmakingServer ()
 
@@ -33,6 +34,11 @@ typedef enum
         _serverState = ServerStateIdel;
     }
     return self;
+}
+
+- (void)dealloc
+{
+    NSLog(@"dealloc : %@", self);
 }
 
 #pragma mark - Methods that the other classes can use

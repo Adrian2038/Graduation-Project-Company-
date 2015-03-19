@@ -14,8 +14,8 @@ typedef enum
     ClientStateSearchingForServers,
     ClientStateConnecting,
     ClientStateConnected,
-    
-}ClientState;
+}
+ClientState;
 
 @interface MatchmakingClient ()
 
@@ -38,6 +38,10 @@ typedef enum
     return self;
 }
 
+- (void)dealloc
+{
+    NSLog(@"dealloc : %@", self);
+}
 
 #pragma mark - Methods that the other classes can use
 
@@ -85,6 +89,23 @@ typedef enum
     [_session connectToPeer:peerID withTimeout:_session.disconnectTimeout];
 }
 
+- (void)disconnectFromServer
+{
+    NSAssert(_clientState != ClientStateIdel, @"Wrong state");
+    
+    _clientState = ClientStateIdel;
+    
+    [_session disconnectFromAllPeers];
+    _session.available = NO;
+    _session.delegate = nil;
+    _session = nil;
+    
+    _availableServers = nil;
+    
+    [self.delegate matchmakingClient:self didDisconnectFromServer:_serverPeerID];
+    _serverPeerID = nil;
+}
+
 #pragma mark - GKSessionDelegate
 
 - (void)session:(GKSession *)session peer:(NSString *)peerID didChangeState:(GKPeerConnectionState)state
@@ -113,11 +134,15 @@ typedef enum
             break;
             
         case GKPeerStateConnected:
-            
+            if (_clientState == ClientStateConnecting) {
+                _clientState = ClientStateConnected;
+            }
             break;
             
         case GKPeerStateDisconnected:
-            
+            if (_clientState == ClientStateConnected) {
+                [self disconnectFromServer];
+            }
             break;
             
         case GKPeerStateConnecting:
@@ -137,6 +162,8 @@ typedef enum
 - (void)session:(GKSession *)session connectionWithPeerFailed:(NSString *)peerID withError:(NSError *)error
 {
     NSLog(@"MatchmakingClient : connction with peer : %@, failed : %@", peerID, error);
+    
+    [self disconnectFromServer ];
 }
 
 - (void)session:(GKSession *)session didFailWithError:(NSError *)error

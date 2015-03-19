@@ -206,6 +206,19 @@
   
 }
 
+#pragma mark - AlertView
+
+- (void)showDisconnectAlert
+{
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Disconneced",
+                                                                                  @"Client disconnected alert title")
+                                                        message:NSLocalizedString(@"You were disconnected from the game",
+                                                                                  @"Client disconnected alert message") delegate:nil
+                                              cancelButtonTitle:NSLocalizedString(@"OK", @"Button : OK")
+                                              otherButtonTitles:nil];
+    [alertView show];
+}
+
 #pragma mark - HostViewControllerDelegate
 
 - (void)hostViewControllerDidCancel:(HostViewController *)controller
@@ -218,6 +231,16 @@
 - (void)joinViewControllerDidCancel:(JoinViewController *)controller
 {
     
+}
+
+- (void)joinViewController:(JoinViewController *)controller didDisconnectWithReason:(QuitReason)reason
+{
+    if (reason == QuitReasonConnectionDropped) {
+        [self.navigationController dismissViewControllerAnimated:NO completion:^
+        {
+            [self showDisconnectAlert];
+        }];
+    }
 }
 
 @end

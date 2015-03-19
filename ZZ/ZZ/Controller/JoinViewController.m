@@ -16,6 +16,7 @@
 
 {
     MatchmakingClient *_matchmakingClient;
+    QuitReason _quitReason;
 }
 
 @property (nonatomic, strong) UIView *connectionView;
@@ -83,10 +84,11 @@
     [super viewDidAppear:animated];
     
     if (!_matchmakingClient) {
+        _quitReason = QuitReasonConnectionDropped;
+        
         _matchmakingClient = [[MatchmakingClient alloc] init];
         _matchmakingClient.delegate = self;
         [_matchmakingClient startSearchingForServerWithSessionID:SESSION_ID];
-        NSLog(@"client ..... view did appear");
         
         self.nameTextField.placeholder = _matchmakingClient.session.displayName;
         [self.tableView reloadData];
@@ -97,6 +99,8 @@
 
 - (IBAction)exitAction:(UIButton *)sender
 {
+    _quitReason = QuitReasonUserQuit;
+    [_matchmakingClient disconnectFromServer];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -138,9 +142,7 @@
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    NSLog(@"why are you difficult to choose"); // A little bug.
-    
+{    
     // Because I don't want any selection anymore .
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     
@@ -162,6 +164,17 @@
 - (void)matchmakingClient:(MatchmakingClient *)client serverBecameUnavailable:(NSString *)peerID
 {
     [self.tableView reloadData];
+}
+
+- (void)matchmakingClient:(MatchmakingClient *)client didDisconnectFromServer:(NSString *)peerID
+{
+    _matchmakingClient.delegate = nil;
+    _matchmakingClient = nil;
+    [self.tableView reloadData];
+    
+    // I use it to replace the delegate, it may produce some bugs
+    [self.delegate joinViewController:self didDisconnectWithReason:_quitReason];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 @end

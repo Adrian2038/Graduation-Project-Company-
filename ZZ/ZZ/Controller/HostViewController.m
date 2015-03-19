@@ -60,7 +60,6 @@
         _matchmakingServer.delegate = self;
         _matchmakingServer.maxClients = 7;
         [_matchmakingServer startAcceptingConnectionsForSessionID:SESSION_ID];
-        NSLog(@"server.... view did appear");
         
         self.nameTextField.placeholder = _matchmakingServer.session.displayName;
         [self.tableView reloadData];
