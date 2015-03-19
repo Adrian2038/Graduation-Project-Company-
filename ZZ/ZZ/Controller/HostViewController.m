@@ -15,14 +15,17 @@
 @interface HostViewController ()
 <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, MatchmakingServerDelegate>
 
+{
+    MatchmakingServer *_matchmakingServer;
+    QuitReason _quitReason;
+}
+
 @property (weak, nonatomic) IBOutlet UILabel *headingLabel;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UITextField *nameTextField;
 @property (weak, nonatomic) IBOutlet UILabel *statusLabel;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIButton *startButton;
-
-@property (nonatomic, strong) MatchmakingServer *matchmakingServer;
 
 @end
 
@@ -84,6 +87,8 @@
 
 - (IBAction)exitAction:(id)sender
 {
+    _quitReason = QuitReasonUserQuit;
+    [_matchmakingServer endSession];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -142,5 +147,17 @@
     [self.tableView reloadData];
 }
 
+- (void)matchmakingServerSessionDidEnd:(MatchmakingServer *)server
+{
+    _matchmakingServer.delegate = nil;
+    _matchmakingServer = nil;
+    [self.tableView reloadData];
+    [self.delegate hostViewController:self didEndSessionWithReason:_quitReason];
+}
+
+- (void)matchmakingServerNoNetwork:(MatchmakingServer *)server
+{
+    _quitReason = QuitReasonNoNetwork;
+}
 
 @end
