@@ -13,7 +13,7 @@
 #import "PeerCell.h"
 
 @interface HostViewController ()
-<UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate>
+<UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, MatchmakingServerDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *headingLabel;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
@@ -32,17 +32,6 @@
 {
     [super viewDidLoad];
     
-    if (!_matchmakingServer) {
-        _matchmakingServer = [[MatchmakingServer alloc] init];
-        _matchmakingServer.maxClients = 7;
-        [_matchmakingServer startAcceptingConnectionsForSessionID:SESSION_ID];
-        
-        
-        self.nameTextField.placeholder = _matchmakingServer.session.displayName;
-        NSLog(@"display name = %@", _matchmakingServer.session.displayName);
-        [self.tableView reloadData];
-    }
-    
     self.headingLabel.font = [UIFont rw_snapFontWithSize:24.0f];
     self.nameLabel.font = [UIFont rw_snapFontWithSize:16.0f];
     self.statusLabel.font = [UIFont rw_snapFontWithSize:16.0f];
@@ -59,7 +48,23 @@
     
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
     
+    if (!_matchmakingServer) {
+        _matchmakingServer = [[MatchmakingServer alloc] init];
+        _matchmakingServer.delegate = self;
+        _matchmakingServer.maxClients = 7;
+        [_matchmakingServer startAcceptingConnectionsForSessionID:SESSION_ID];
+        NSLog(@"server.... view did appear");
+        
+        self.nameTextField.placeholder = _matchmakingServer.session.displayName;
+        [self.tableView reloadData];
+    }
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -92,11 +97,15 @@
     return NO;
 }
 
-#pragma mark - UITableViewDataSource & UITableViewDelegate
+#pragma mark - UITableViewDataSource 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 3;
+    if (_matchmakingServer) {
+        return [_matchmakingServer connectedClientCount];
+    } else {
+        return 0;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
@@ -107,16 +116,31 @@
     if (!cell) {
         cell = [[PeerCell alloc] initWithStyle:UITableViewCellStyleDefault
                                       reuseIdentifier:cellID];
-    }    
-    NSString *name = nil;
-    switch (indexPath.row) {
-        case 0: name = @"Tom"; break;
-        case 1: name = @"Jack"; break;
-        case 2: name = @"Taylor Swift"; break;
-        default: break;
     }
-    cell.textLabel.text = name;
+    NSString *peerID = [_matchmakingServer peerIDForConnectedClientAtIndex:indexPath.row];
+    cell.textLabel.text = [_matchmakingServer displayNameForPeerID:peerID];
+    
     return cell;
+}
+
+#pragma mark - UITableViewDelegate
+
+- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return nil;
+}
+
+
+#pragma mark - MatchmakingServerDelegate
+
+- (void)matchmakingServer:(MatchmakingServer *)server clientDidConnect:(NSString *)peerID
+{
+    [self.tableView reloadData];
+}
+
+- (void)matchmakingServer:(MatchmakingServer *)server clientDidDisconnect:(NSString *)peerID
+{
+    [self.tableView reloadData];
 }
 
 

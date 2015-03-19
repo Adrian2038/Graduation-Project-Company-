@@ -37,15 +37,6 @@
 {
     [super viewDidLoad];
     
-    if (!_matchmakingClient) {
-        _matchmakingClient = [[MatchmakingClient alloc] init];
-        _matchmakingClient.delegate = self;
-        [_matchmakingClient startSearchingForServerWithSessionID:SESSION_ID];
-        
-        self.nameTextField.placeholder = _matchmakingClient.session.displayName;
-        [self.tableView reloadData];
-    }
-    
     self.headingLabel.font = [UIFont rw_snapFontWithSize:24.0f];
     self.nameLabel.font = [UIFont rw_snapFontWithSize:16.0f];
     self.statusLabel.font = [UIFont rw_snapFontWithSize:16.0f];
@@ -66,7 +57,7 @@
     self.connectionView = [[UIView alloc] initWithFrame:self.view.bounds];
     self.connectionView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Felt"]];
     
-    CGRect labelFrame = CGRectMake(self.view.center.x, self.view.center.y, 100, 20);
+    CGRect labelFrame = CGRectMake(self.view.center.x - 50, self.view.center.y, 100, 20);
     self.connectionViewLabel = [[UILabel alloc] initWithFrame:labelFrame];
     self.connectionViewLabel.text = @"Connecting...";
     self.connectionViewLabel.textColor = [UIColor colorWithRed:116/255.0f green:192/255.0f blue:97/255.0f alpha:1.0f];
@@ -87,6 +78,20 @@
     [self.connectionView addSubview:self.connectionViewExitButton];
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    if (!_matchmakingClient) {
+        _matchmakingClient = [[MatchmakingClient alloc] init];
+        _matchmakingClient.delegate = self;
+        [_matchmakingClient startSearchingForServerWithSessionID:SESSION_ID];
+        NSLog(@"client ..... view did appear");
+        
+        self.nameTextField.placeholder = _matchmakingClient.session.displayName;
+        [self.tableView reloadData];
+    }
+}
 
 #pragma mark - Action
 
@@ -134,6 +139,8 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSLog(@"why are you difficult to choose"); // A little bug.
+    
     // Because I don't want any selection anymore .
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     
