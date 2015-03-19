@@ -60,23 +60,30 @@
     
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
-    
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+  
     // Init all the contents of connection view.
     self.connectionView = [[UIView alloc] initWithFrame:self.view.bounds];
     self.connectionView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Felt"]];
     
     CGRect labelFrame = CGRectMake(self.view.center.x, self.view.center.y, 100, 20);
     self.connectionViewLabel = [[UILabel alloc] initWithFrame:labelFrame];
-    self.connectionViewLabel.text = @"Connecting";
+    self.connectionViewLabel.text = @"Connecting...";
+    self.connectionViewLabel.textColor = [UIColor colorWithRed:116/255.0f green:192/255.0f blue:97/255.0f alpha:1.0f];
+
     self.connectionViewLabel.textAlignment = NSTextAlignmentCenter;
     self.connectionViewLabel.font = [UIFont rw_snapFontWithSize:16.0f];
     [self.connectionView addSubview:self.connectionViewLabel];
     
-    CGRect buttonFrame = CGRectMake(16, self.view.self.bounds.size.height - 8, 28, 28);
+    CGRect buttonFrame = CGRectMake(16, self.view.self.bounds.size.height - 36, 28, 28);
     self.connectionViewExitButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [self.connectionViewExitButton setFrame:buttonFrame];
     [self.connectionViewExitButton setBackgroundImage:[UIImage imageNamed:@"ExitButton"]
                                              forState:UIControlStateNormal];
+    [self.connectionViewExitButton addTarget:self
+                                      action:@selector(exitAction:)
+                            forControlEvents:UIControlEventTouchUpInside];
+  
     [self.connectionView addSubview:self.connectionViewExitButton];
 }
 
@@ -127,7 +134,6 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"select......");
     // Because I don't want any selection anymore .
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     

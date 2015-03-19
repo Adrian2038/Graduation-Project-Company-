@@ -10,6 +10,7 @@
 #import "UIButton+SnapAdditions.h"
 #import "UIFont+SnapAdditions.h"
 #import "MatchmakingServer.h"
+#import "PeerCell.h"
 
 @interface HostViewController ()
 <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate>
@@ -104,7 +105,7 @@
     static NSString *cellID = @"cellID";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
     if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
+        cell = [[PeerCell alloc] initWithStyle:UITableViewCellStyleDefault
                                       reuseIdentifier:cellID];
     }    
     NSString *name = nil;
