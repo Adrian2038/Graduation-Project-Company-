@@ -10,7 +10,7 @@
 
 typedef enum
 {
-    ServerStateIdel,
+    ServerStateIdle,
     ServerStateAcceptingConnections,
     ServerStateIgnoringNewConnections,
 }
@@ -27,32 +27,25 @@ ServerState;
 
 @implementation MatchmakingServer
 
+
 - (instancetype)init
 {
     self = [super init];
-    if (self) {
-        _serverState = ServerStateIdel;
+    if (self)
+    {
+        _serverState = ServerStateIdle;
     }
     return self;
 }
 
-- (void)dealloc
-{
-    NSLog(@"dealloc : %@", self);
-}
-
-#pragma mark - Methods that the other classes can use
-
 - (void)startAcceptingConnectionsForSessionID:(NSString *)sessionID
 {
-    if (_serverState == ServerStateIdel) {
+    if (_serverState == ServerStateIdle)
+    {
         _serverState = ServerStateAcceptingConnections;
-        
         _connectedClients = [NSMutableArray arrayWithCapacity:self.maxClients];
         
-        _session = [[GKSession alloc] initWithSessionID:sessionID
-                                            displayName:nil
-                                            sessionMode:GKSessionModeServer];
+        _session = [[GKSession alloc] initWithSessionID:sessionID displayName:nil sessionMode:GKSessionModeServer];
         _session.delegate = self;
         _session.available = YES;
     }
@@ -61,6 +54,86 @@ ServerState;
 - (NSArray *)connectedClients
 {
     return _connectedClients;
+}
+
+#pragma mark - GKSessionDelegate
+
+- (void)session:(GKSession *)session peer:(NSString *)peerID didChangeState:(GKPeerConnectionState)state
+{
+    NSLog(@"MatchmakingServer: peer %@ changed state %d", peerID, state);
+    
+    switch (state)
+    {
+        case GKPeerStateAvailable:
+            break;
+            
+        case GKPeerStateUnavailable:
+            break;
+            
+            // A new client has connected to the server.
+        case GKPeerStateConnected:
+            if (_serverState == ServerStateAcceptingConnections)
+            {
+                if (![_connectedClients containsObject:peerID])
+                {
+                    [_connectedClients addObject:peerID];
+                    [self.delegate matchmakingServer:self clientDidConnect:peerID];
+                }
+            }
+            break;
+            
+            // A client has disconnected from the server.
+        case GKPeerStateDisconnected:
+            if (_serverState != ServerStateIdle)
+            {
+                if ([_connectedClients containsObject:peerID])
+                {
+                    [_connectedClients removeObject:peerID];
+                    [self.delegate matchmakingServer:self clientDidDisconnect:peerID];
+                }
+            }
+            break;
+            
+        case GKPeerStateConnecting:
+            break;
+    }
+}
+
+- (void)session:(GKSession *)session didReceiveConnectionRequestFromPeer:(NSString *)peerID
+{
+    NSLog(@"MatchmakingServer: connection request from peer %@", peerID);
+    
+    if (_serverState == ServerStateAcceptingConnections && [self connectedClientCount] < self.maxClients)
+    {
+        NSError *error;
+        if ([session acceptConnectionFromPeer:peerID error:&error])
+            NSLog(@"MatchmakingServer: Connection accepted from peer %@", peerID);
+        else
+            NSLog(@"MatchmakingServer: Error accepting connection from peer %@, %@", peerID, error);
+    }
+    else  // not accepting connections or too many clients
+    {
+        [session denyConnectionFromPeer:peerID];
+    }
+}
+
+- (void)session:(GKSession *)session connectionWithPeerFailed:(NSString *)peerID withError:(NSError *)error
+{
+    NSLog(@"MatchmakingServer: connection with peer %@ failed %@", peerID, error);
+}
+
+- (void)session:(GKSession *)session didFailWithError:(NSError *)error
+{
+    NSLog(@"MatchmakingServer: session failed %@", error);
+    
+    if ([[error domain] isEqualToString:GKSessionErrorDomain])
+    {
+        if ([error code] == GKSessionCannotEnableError)
+        {
+            [self.delegate matchmakingServerNoNetwork:self];
+            [self endSession];
+        }
+    }
 }
 
 - (NSUInteger)connectedClientCount
@@ -80,9 +153,9 @@ ServerState;
 
 - (void)endSession
 {
-    NSAssert(_serverState != ServerStateIdel, @"Wrong state");
+    NSAssert(_serverState != ServerStateIdle, @"Wrong state");
     
-    _serverState = ServerStateIdel;
+    _serverState = ServerStateIdle;
     
     [_session disconnectFromAllPeers];
     _session.available = NO;
@@ -94,80 +167,11 @@ ServerState;
     [self.delegate matchmakingServerSessionDidEnd:self];
 }
 
-#pragma mark - GKSessionDelegate
+#pragma mark - Dealloc
 
-- (void)session:(GKSession *)session peer:(NSString *)peerID didChangeState:(GKPeerConnectionState)state
+- (void)dealloc
 {
-    NSLog(@"MatchmakingServer : peer : %@ ,change state : %d", peerID, state);
-    
-    switch (state) {
-        case GKPeerStateAvailable:
-            break;
-            
-        case GKPeerStateUnavailable:
-            break;
-
-            // A new client has connected to the server
-        case GKPeerStateConnected:
-            if (_serverState == ServerStateAcceptingConnections) {
-                if (![_connectedClients containsObject:peerID]) {
-                    [_connectedClients addObject:peerID];
-                    [self.delegate matchmakingServer:self clientDidConnect:peerID];
-                }
-            }
-            break;
-
-            // A clinet has disconnected from the server 
-        case GKPeerStateDisconnected:
-            if (_serverState != ServerStateIdel) {
-                if ([_connectedClients containsObject:peerID]) {
-                    [_connectedClients removeObject:peerID];
-                    [self.delegate matchmakingServer:self clientDidDisconnect:peerID];
-                }
-            }
-            break;
-
-        case GKPeerStateConnecting:
-            
-            break;
-
-        default:
-            break;
-    }
-}
-
-- (void)session:(GKSession *)session didReceiveConnectionRequestFromPeer:(NSString *)peerID
-{
-    NSLog(@"MatchmakingServer : connction request from peer : %@", peerID);
-    
-    if (_serverState == ServerStateAcceptingConnections && [self connectedClientCount] < self.maxClients) {
-        
-        NSError *error;
-        if ([session acceptConnectionFromPeer:peerID error:&error]) {
-            NSLog(@"MatchmakingClient : connection accepeted from peer : %@", peerID);
-        } else {
-            NSLog(@"MatchmakingClient : Error accepting connection form peer : %@ ", peerID);
-        }
-    } else {
-        [session denyConnectionFromPeer:peerID];
-    }
-}
-
-- (void)session:(GKSession *)session connectionWithPeerFailed:(NSString *)peerID withError:(NSError *)error
-{
-    NSLog(@"MatchmakingServer : connction with peer : %@, failed : %@", peerID, error);
-}
-
-- (void)session:(GKSession *)session didFailWithError:(NSError *)error
-{
-    NSLog(@"MatchmakingServer : session failed : %@ ", error);
-    
-    if ([[error domain] isEqualToString:GKSessionErrorDomain]) {
-        if ([error code] == GKSessionCannotEnableError) {
-            [self.delegate matchmakingServerNoNetwork:self];
-            [self endSession];
-        }
-    }
+    NSLog(@"dealloc %@", self);
 }
 
 @end

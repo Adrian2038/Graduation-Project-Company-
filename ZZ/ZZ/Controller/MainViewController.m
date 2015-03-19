@@ -6,24 +6,19 @@
 //  Copyright (c) 2015年 Zhu Dengquan. All rights reserved.
 //
 
+
 #import "MainViewController.h"
 #import "UIButton+SnapAdditions.h"
 
 @interface MainViewController ()
 
 {
-  BOOL _buttonEnabed;
+    BOOL _buttonsEnabled;
 }
 
-@property (weak, nonatomic) IBOutlet UIImageView *sImageView;
-@property (weak, nonatomic) IBOutlet UIImageView *nImageView;
-@property (weak, nonatomic) IBOutlet UIImageView *aImageView;
-@property (weak, nonatomic) IBOutlet UIImageView *pImageView;
-@property (weak, nonatomic) IBOutlet UIImageView *jokerImageView;
-
-@property (weak, nonatomic) IBOutlet UIButton *hostGameButton;
-@property (weak, nonatomic) IBOutlet UIButton *joinGameButton;
-@property (weak, nonatomic) IBOutlet UIButton *singlePlayerGameButton;
+@property (nonatomic, weak) IBOutlet UIButton *hostGameButton;
+@property (nonatomic, weak) IBOutlet UIButton *joinGameButton;
+@property (nonatomic, weak) IBOutlet UIButton *singlePlayerGameButton;
 
 @end
 
@@ -32,13 +27,28 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-  
-    [self.navigationController setNavigationBarHidden:YES animated:NO];
-    [self.navigationController setToolbarHidden:YES animated:NO];
-  
+    
+    // I don't want the naviBar.
+    [self.navigationController setNavigationBarHidden:YES];
+    [self.navigationController setToolbarHidden:YES];
+    
     [self.hostGameButton rw_applySnapStyle];
     [self.joinGameButton rw_applySnapStyle];
     [self.singlePlayerGameButton rw_applySnapStyle];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [self prepareForIntroAnimation];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    [self performIntroAnimation];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -46,202 +56,95 @@
     return UIInterfaceOrientationIsLandscape(interfaceOrientation);
 }
 
-- (void)dealloc
-{
-    NSLog(@"dealloc %@", self);
-}
+#pragma mark - The actions I may not use.
 
-#pragma mark - Segue
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+- (IBAction)hostGameAction:(id)sender
 {
-    if ([segue.identifier isEqualToString:@"Host Game"]) {
-        if ([segue.destinationViewController isKindOfClass:[HostViewController class]]) {
-            HostViewController *controller = (HostViewController *)segue.destinationViewController;
-            controller.delegate = self;
-        }
-    } else if ([segue.identifier isEqualToString:@"Join Game"]) {
-        if ([segue.destinationViewController isKindOfClass:[JoinViewController class]]) {
-            JoinViewController *controller = (JoinViewController *)segue.destinationViewController;
-            controller.delegate = self;
-        }
+    if (_buttonsEnabled)
+    {
+        [self performExitAnimationWithCompletionBlock:^(BOOL finished)
+         {
+             HostViewController *controller = [[HostViewController alloc] initWithNibName:@"HostViewController" bundle:nil];
+             controller.delegate = self;
+             
+             [self presentViewController:controller animated:NO completion:nil];
+         }];
     }
 }
 
-#pragma mark - Animation  ... Something wrong with the animation, and the animation may not be used
-
-- (void)viewWillAppear:(BOOL)animated
+- (IBAction)joinGameAction:(id)sender
 {
-    [super viewWillAppear:animated];
-  
-    [self prepareForIntroAnimation];
+    if (_buttonsEnabled)
+    {
+        [self performExitAnimationWithCompletionBlock:^(BOOL finished)
+         {
+             JoinViewController *controller = [[JoinViewController alloc] initWithNibName:@"JoinViewController" bundle:nil];
+             controller.delegate = self;
+             
+             [self presentViewController:controller animated:NO completion:nil];
+         }];
+    }
 }
 
-- (void)viewDidAppear:(BOOL)animated
+- (IBAction)singlePlayerGameAction:(id)sender
 {
-    [super viewDidAppear:animated];
-  
-    [self performIntroAnimation];
 }
 
 - (void)prepareForIntroAnimation
 {
-    self.sImageView.hidden = YES;
-    self.nImageView.hidden = YES;
-    self.aImageView.hidden = YES;
-    self.pImageView.hidden = YES;
-    self.jokerImageView.hidden = YES;
-  
-    self.joinGameButton.alpha = 0.0f;
     self.hostGameButton.alpha = 0.0f;
+    self.joinGameButton.alpha = 0.0f;
     self.singlePlayerGameButton.alpha = 0.0f;
-  
-    _buttonEnabed = NO;
+    
+    _buttonsEnabled = NO;
 }
 
 - (void)performIntroAnimation
 {
-    self.sImageView.hidden = NO;
-    self.nImageView.hidden = NO;
-    self.aImageView.hidden = NO;
-    self.pImageView.hidden = NO;
-    self.jokerImageView.hidden = NO;
-  
-    CGPoint point = CGPointMake(self.view.bounds.size.width / 2.0f, self.view.bounds.size.height * 2.0f);
-  
-    self.sImageView.center = point;
-    self.nImageView.center = point;
-    self.aImageView.center = point;
-    self.pImageView.center = point;
-    self.jokerImageView.center = point;
-  
-    [UIView animateWithDuration:0.65f
-                          delay:0.5f
-                        options:UIViewAnimationOptionCurveEaseOut
-                     animations:^
-   
-    {
-       self.sImageView.center = CGPointMake(80.0, 108.0f);
-       self.sImageView.transform = CGAffineTransformMakeRotation(-0.22f);
-       
-       self.nImageView.center = CGPointMake(160.0f, 93.0f);
-       self.nImageView.transform = CGAffineTransformMakeRotation(-0.1f);
-       
-       self.aImageView.center = CGPointMake(240.0f, 88.0f);
-     
-       self.pImageView.center = CGPointMake(320.0f, 93.0f);
-       self.pImageView.transform = CGAffineTransformMakeRotation(0.1f);
-     
-       self.jokerImageView.center = CGPointMake(400.0f, 108.0f);
-       self.jokerImageView.transform = CGAffineTransformMakeRotation(0.22f);
-    }
-                     completion:nil];
-  
- 
     [UIView animateWithDuration:0.5f
                           delay:1.0f
                         options:UIViewAnimationOptionCurveEaseOut
                      animations:^
-    {
-       self.hostGameButton.alpha = 1.0f;
-       self.joinGameButton.alpha = 1.0f;
-       self.singlePlayerGameButton.alpha = 1.0f;
-    }
+     {
+         self.hostGameButton.alpha = 1.0f;
+         self.joinGameButton.alpha = 1.0f;
+         self.singlePlayerGameButton.alpha = 1.0f;
+     }
                      completion:^(BOOL finished)
      {
-       _buttonEnabed = YES;
+         _buttonsEnabled = YES;
      }];
-  
+    
 }
 
-- (void)performExitAnimationWithCompletionBlock:(void(^)(BOOL))block
+- (void)performExitAnimationWithCompletionBlock:(void (^)(BOOL))block
 {
-    _buttonEnabed = NO;
-  
+    _buttonsEnabled = NO;
+    
     [UIView animateWithDuration:0.3f
-                          delay:0.0f
+                          delay:0.3f
                         options:UIViewAnimationOptionCurveEaseOut
                      animations:^
-                     {
-                         self.sImageView.center = self.aImageView.center;
-                         self.sImageView.transform = self.aImageView.transform;
-                         
-                         self.nImageView.center = self.aImageView.center;
-                         self.nImageView.transform = self.aImageView.transform;
-                         
-                         self.pImageView.center = self.aImageView.center;
-                         self.pImageView.transform = self.aImageView.transform;
-                         
-                         self.jokerImageView.center = self.aImageView.center;
-                         self.joinGameButton.transform = self.aImageView.transform;
-                     }
-                     completion:^(BOOL finished)
-                     {
-                         CGPoint point = CGPointMake(self.aImageView.center.x, self.view.frame.size.height * -2.0f);
-                         
-                         [UIView animateWithDuration:1.0f
-                                               delay:0.0f
-                                             options:UIViewAnimationOptionCurveEaseOut
-                                          animations:^
-                                          {
-                                              self.sImageView.center = point;
-                                              self.nImageView.center = point;
-                                              self.aImageView.center = point;
-                                              self.pImageView.center = point;
-                                              self.jokerImageView.center = point;
-                                          }
-                                          completion:block];
-                         
-                         [UIView animateWithDuration:0.3f
-                                               delay:0.3f
-                                             options:UIViewAnimationOptionCurveEaseOut
-                                          animations:^
-                                          {
-                                              self.hostGameButton.alpha = 0.0f;
-                                              self.joinGameButton.alpha = 0.0f;
-                                              self.singlePlayerGameButton.alpha = 0.0f;
-                                          }
-                                          completion:nil];
-                     }];
-  
-}
+     {
+         self.hostGameButton.alpha = 0.0f;
+         self.joinGameButton.alpha = 0.0f;
+         self.singlePlayerGameButton.alpha = 0.0f;
+     }
+                     completion:nil];
 
-#pragma mark - AlertView
-
-- (void)showDisconnectAlert
-{
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Disconneced",
-                                                                                  @"Client disconnected alert title")
-                                                        message:NSLocalizedString(@"You were disconnected from the game",
-                                                                                  @"Client disconnected alert message")
-                                                       delegate:nil
-                                              cancelButtonTitle:NSLocalizedString(@"OK", @"Button : OK")
-                                              otherButtonTitles:nil];
-    [alertView show];
-}
-
-- (void)showNoNetworkAlert
-{
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"No Network",
-                                                                                  @"No network alert title")
-                                                        message:NSLocalizedString(@"To use multiplayer, please enable you Bluooth or WI-FI in your device's setting ",
-                                                                                  @"No network alert message")
-                                                       delegate:nil
-                                              cancelButtonTitle:NSLocalizedString(@"OK", @"Button : OK")
-                                              otherButtonTitles:nil];
-    [alertView show];
 }
 
 #pragma mark - HostViewControllerDelegate
 
 - (void)hostViewControllerDidCancel:(HostViewController *)controller
 {
-
+    [self dismissViewControllerAnimated:NO completion:nil];
 }
 
 - (void)hostViewController:(HostViewController *)controller didEndSessionWithReason:(QuitReason)reason
 {
-    if (reason == QuitReasonNoNetwork) {
+    if (reason == QuitReasonNoNetwork)
+    {
         [self showNoNetworkAlert];
     }
 }
@@ -250,20 +153,54 @@
 
 - (void)joinViewControllerDidCancel:(JoinViewController *)controller
 {
-    
+    [self dismissViewControllerAnimated:NO completion:nil];
 }
 
 - (void)joinViewController:(JoinViewController *)controller didDisconnectWithReason:(QuitReason)reason
 {
-    if (reason == QuitReasonNoNetwork) {
+    if (reason == QuitReasonNoNetwork)
+    {
         [self showNoNetworkAlert];
     }
-    else if (reason == QuitReasonConnectionDropped) {
-        [self.navigationController dismissViewControllerAnimated:NO completion:^
-        {
-            [self showDisconnectAlert];
-        }];
+    else if (reason == QuitReasonConnectionDropped)
+    {
+        [self dismissViewControllerAnimated:NO completion:^
+         {
+             [self showDisconnectedAlert];
+         }];
     }
+}
+
+- (void)showNoNetworkAlert
+{
+    UIAlertView *alertView = [[UIAlertView alloc]
+                              initWithTitle:NSLocalizedString(@"No Network", @"No network alert title")
+                              message:NSLocalizedString(@"To use multiplayer, please enable Bluetooth or Wi-Fi in your device's Settings.", @"No network alert message")
+                              delegate:nil
+                              cancelButtonTitle:NSLocalizedString(@"OK", @"Button: OK")
+                              otherButtonTitles:nil];
+    
+    [alertView show];
+}
+
+- (void)showDisconnectedAlert
+{
+    UIAlertView *alertView = [[UIAlertView alloc]
+                              initWithTitle:NSLocalizedString(@"Disconnected", @"Client disconnected alert title")
+                              message:NSLocalizedString(@"You were disconnected from the game.", @"Client disconnected alert message")
+                              delegate:nil
+                              cancelButtonTitle:NSLocalizedString(@"OK", @"Button: OK")
+                              otherButtonTitles:nil];
+    
+    [alertView show];
+}
+
+#pragma mark - Dealloc
+
+- (void)dealloc
+{
+    NSLog(@"dealloc %@", self);
+
 }
 
 @end

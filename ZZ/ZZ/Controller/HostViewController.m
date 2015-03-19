@@ -9,59 +9,68 @@
 #import "HostViewController.h"
 #import "UIButton+SnapAdditions.h"
 #import "UIFont+SnapAdditions.h"
-#import "MatchmakingServer.h"
 #import "PeerCell.h"
 
 @interface HostViewController ()
-<UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, MatchmakingServerDelegate>
 
 {
     MatchmakingServer *_matchmakingServer;
     QuitReason _quitReason;
 }
 
-@property (weak, nonatomic) IBOutlet UILabel *headingLabel;
-@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
-@property (weak, nonatomic) IBOutlet UITextField *nameTextField;
-@property (weak, nonatomic) IBOutlet UILabel *statusLabel;
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (weak, nonatomic) IBOutlet UIButton *startButton;
+@property (nonatomic, weak) IBOutlet UILabel *headingLabel;
+@property (nonatomic, weak) IBOutlet UILabel *nameLabel;
+@property (nonatomic, weak) IBOutlet UITextField *nameTextField;
+@property (nonatomic, weak) IBOutlet UILabel *statusLabel;
+@property (nonatomic, weak) IBOutlet UITableView *tableView;
+@property (nonatomic, weak) IBOutlet UIButton *startButton;
 
 @end
 
 @implementation HostViewController
 
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        // Custom initialization
+    }
+    return self;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    self.headingLabel.font = [UIFont rw_snapFontWithSize:24.0f];
+    self.headingLabel.font = [UIFont rw_snapFontWithSize:24.0f];;
     self.nameLabel.font = [UIFont rw_snapFontWithSize:16.0f];
     self.statusLabel.font = [UIFont rw_snapFontWithSize:16.0f];
     self.nameTextField.font = [UIFont rw_snapFontWithSize:20.0f];
- 
+    
     [self.startButton rw_applySnapStyle];
- 
+    
     UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc]
                                                  initWithTarget:self.nameTextField
                                                  action:@selector(resignFirstResponder)];
+    gestureRecognizer.cancelsTouchesInView = NO;
     [self.view addGestureRecognizer:gestureRecognizer];
-    
-    self.nameTextField.delegate = self;
-    
-    self.tableView.dataSource = self;
-    self.tableView.delegate = self;
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+}
+
+- (void)viewDidUnload
+{
+    [super viewDidUnload];
+    // Release any retained subviews of the main view.
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
     
-    if (!_matchmakingServer) {
+    if (_matchmakingServer == nil)
+    {
         _matchmakingServer = [[MatchmakingServer alloc] init];
+        _matchmakingServer.maxClients = 3;
         _matchmakingServer.delegate = self;
-        _matchmakingServer.maxClients = 7;
         [_matchmakingServer startAcceptingConnectionsForSessionID:SESSION_ID];
         
         self.nameTextField.placeholder = _matchmakingServer.session.displayName;
@@ -74,14 +83,7 @@
     return UIInterfaceOrientationIsLandscape(interfaceOrientation);
 }
 
-- (void)dealloc
-{
-    NSLog(@"dealloc %@", self);
-}
-
-#pragma mark - Action
-
-- (IBAction)startAction:(UIButton *)sender
+- (IBAction)startAction:(id)sender
 {
 }
 
@@ -89,38 +91,27 @@
 {
     _quitReason = QuitReasonUserQuit;
     [_matchmakingServer endSession];
-    [self.navigationController popViewControllerAnimated:YES];
+    [self.delegate hostViewControllerDidCancel:self];
 }
 
-#pragma mark - UITextFieldDelegate
-
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
-{
-    [textField resignFirstResponder];
-    
-    return NO;
-}
-
-#pragma mark - UITableViewDataSource 
+#pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (_matchmakingServer) {
+    if (_matchmakingServer != nil)
         return [_matchmakingServer connectedClientCount];
-    } else {
+    else
         return 0;
-    }
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView
-         cellForRowAtIndexPath:(NSIndexPath *)indexPath
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *cellID = @"cellID";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
-    if (!cell) {
-        cell = [[PeerCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                      reuseIdentifier:cellID];
-    }
+    static NSString *CellIdentifier = @"CellID";
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil)
+        cell = [[PeerCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+    
     NSString *peerID = [_matchmakingServer peerIDForConnectedClientAtIndex:indexPath.row];
     cell.textLabel.text = [_matchmakingServer displayNameForPeerID:peerID];
     
@@ -134,6 +125,13 @@
     return nil;
 }
 
+#pragma mark - UITextFieldDelegate
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    return NO;
+}
 
 #pragma mark - MatchmakingServerDelegate
 
@@ -155,9 +153,16 @@
     [self.delegate hostViewController:self didEndSessionWithReason:_quitReason];
 }
 
-- (void)matchmakingServerNoNetwork:(MatchmakingServer *)server
+- (void)matchmakingServerNoNetwork:(MatchmakingServer *)session
 {
     _quitReason = QuitReasonNoNetwork;
+}
+
+#pragma mark - Dealloc
+
+- (void)dealloc
+{
+    NSLog(@"dealloc %@", self);
 }
 
 @end
