@@ -64,7 +64,8 @@
     {
         [self performExitAnimationWithCompletionBlock:^(BOOL finished)
          {
-             HostViewController *controller = [[HostViewController alloc] initWithNibName:@"HostViewController" bundle:nil];
+             HostViewController *controller = [[HostViewController alloc] initWithNibName:@"HostViewController"
+                                                                                   bundle:nil];
              controller.delegate = self;
              
              [self presentViewController:controller animated:NO completion:nil];
@@ -78,7 +79,8 @@
     {
         [self performExitAnimationWithCompletionBlock:^(BOOL finished)
          {
-             JoinViewController *controller = [[JoinViewController alloc] initWithNibName:@"JoinViewController" bundle:nil];
+             JoinViewController *controller = [[JoinViewController alloc] initWithNibName:@"JoinViewController"
+                                                                                   bundle:nil];
              controller.delegate = self;
              
              [self presentViewController:controller animated:NO completion:nil];

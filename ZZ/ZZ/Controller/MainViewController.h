@@ -6,7 +6,6 @@
 //  Copyright (c) 2015年 Zhu Dengquan. All rights reserved.
 //
 
-#import "UIFont+SnapAdditions.h"
 #import "HostViewController.h"
 #import "JoinViewController.h"
 
