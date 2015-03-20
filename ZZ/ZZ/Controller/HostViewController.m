@@ -74,7 +74,7 @@
     if (_matchmakingServer == nil)
     {
         _matchmakingServer = [[MatchmakingServer alloc] init];
-        _matchmakingServer.maxClients = 3;
+        _matchmakingServer.maxClients = 7;
         _matchmakingServer.delegate = self;
         [_matchmakingServer startAcceptingConnectionsForSessionID:SESSION_ID];
         

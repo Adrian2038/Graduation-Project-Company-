@@ -53,6 +53,7 @@ ServerState;
         _session.delegate = self;
         _session.available = YES;
     }
+    NSLog(@"start broadcast ");
 }
 
 - (NSArray *)connectedClients
