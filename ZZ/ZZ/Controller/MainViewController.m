@@ -8,9 +8,12 @@
 
 
 #import "MainViewController.h"
+#import "HostViewController.h"
+#import "JoinViewController.h"
+
 #import "UIButton+SnapAdditions.h"
 
-@interface MainViewController ()
+@interface MainViewController () <HostViewControllerDelegate, JoinViewControllerDelegate>
 
 {
     BOOL _buttonsEnabled;
@@ -23,6 +26,9 @@
 @end
 
 @implementation MainViewController
+
+
+#pragma mark - LifeCycle of vc
 
 - (void)viewDidLoad
 {
@@ -101,6 +107,8 @@
     _buttonsEnabled = NO;
 }
 
+#pragma mark - Animation
+
 - (void)performIntroAnimation
 {
     [UIView animateWithDuration:0.5f
@@ -134,6 +142,32 @@
      }
                      completion:nil];
 
+}
+
+#pragma mark - AlertView
+
+- (void)showNoNetworkAlert
+{
+    UIAlertView *alertView = [[UIAlertView alloc]
+                              initWithTitle:NSLocalizedString(@"No Network", @"No network alert title")
+                              message:NSLocalizedString(@"To use multiplayer, please enable Bluetooth or Wi-Fi in your device's Settings.", @"No network alert message")
+                              delegate:nil
+                              cancelButtonTitle:NSLocalizedString(@"OK", @"Button: OK")
+                              otherButtonTitles:nil];
+    
+    [alertView show];
+}
+
+- (void)showDisconnectedAlert
+{
+    UIAlertView *alertView = [[UIAlertView alloc]
+                              initWithTitle:NSLocalizedString(@"Disconnected", @"Client disconnected alert title")
+                              message:NSLocalizedString(@"You were disconnected from the game.", @"Client disconnected alert message")
+                              delegate:nil
+                              cancelButtonTitle:NSLocalizedString(@"OK", @"Button: OK")
+                              otherButtonTitles:nil];
+    
+    [alertView show];
 }
 
 #pragma mark - HostViewControllerDelegate
@@ -171,30 +205,6 @@
              [self showDisconnectedAlert];
          }];
     }
-}
-
-- (void)showNoNetworkAlert
-{
-    UIAlertView *alertView = [[UIAlertView alloc]
-                              initWithTitle:NSLocalizedString(@"No Network", @"No network alert title")
-                              message:NSLocalizedString(@"To use multiplayer, please enable Bluetooth or Wi-Fi in your device's Settings.", @"No network alert message")
-                              delegate:nil
-                              cancelButtonTitle:NSLocalizedString(@"OK", @"Button: OK")
-                              otherButtonTitles:nil];
-    
-    [alertView show];
-}
-
-- (void)showDisconnectedAlert
-{
-    UIAlertView *alertView = [[UIAlertView alloc]
-                              initWithTitle:NSLocalizedString(@"Disconnected", @"Client disconnected alert title")
-                              message:NSLocalizedString(@"You were disconnected from the game.", @"Client disconnected alert message")
-                              delegate:nil
-                              cancelButtonTitle:NSLocalizedString(@"OK", @"Button: OK")
-                              otherButtonTitles:nil];
-    
-    [alertView show];
 }
 
 #pragma mark - Dealloc

@@ -7,10 +7,13 @@
 //
 
 #import "JoinViewController.h"
+
+#import "MatchmakingClient.h"
 #import "UIFont+SnapAdditions.h"
 #import "PeerCell.h"
 
 @interface JoinViewController ()
+<UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, MatchmakingClientDelegate>
 
 {
     MatchmakingClient *_matchmakingClient;
@@ -29,6 +32,7 @@
 
 @implementation JoinViewController
 
+#pragma mark - LifeCycle of vc
 
 - (void)viewDidLoad
 {
@@ -40,7 +44,9 @@
     self.waitLabel.font = [UIFont rw_snapFontWithSize:18.0f];
     self.nameTextField.font = [UIFont rw_snapFontWithSize:20.0f];
     
-    UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self.nameTextField action:@selector(resignFirstResponder)];
+    UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc]
+                                                 initWithTarget:self.nameTextField
+                                                 action:@selector(resignFirstResponder)];
     gestureRecognizer.cancelsTouchesInView = NO;
     [self.view addGestureRecognizer:gestureRecognizer];
 }
@@ -72,6 +78,8 @@
 {
     return UIInterfaceOrientationIsLandscape(interfaceOrientation);
 }
+
+#pragma mark - Action
 
 - (IBAction)exitAction:(id)sender
 {

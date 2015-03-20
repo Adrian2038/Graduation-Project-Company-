@@ -7,11 +7,14 @@
 //
 
 #import "HostViewController.h"
+
+#import "MatchmakingServer.h"
 #import "UIButton+SnapAdditions.h"
 #import "UIFont+SnapAdditions.h"
 #import "PeerCell.h"
 
 @interface HostViewController ()
+<UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, MatchmakingServerDelegate>
 
 {
     MatchmakingServer *_matchmakingServer;
@@ -37,6 +40,8 @@
     }
     return self;
 }
+
+#pragma mark - LifeCycle of vc
 
 - (void)viewDidLoad
 {
@@ -82,6 +87,8 @@
 {
     return UIInterfaceOrientationIsLandscape(interfaceOrientation);
 }
+
+#pragma mark - Action
 
 - (IBAction)startAction:(id)sender
 {

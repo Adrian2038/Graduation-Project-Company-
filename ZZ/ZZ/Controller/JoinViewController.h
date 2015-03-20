@@ -7,7 +7,6 @@
 //
 
 
-#import "MatchmakingClient.h"
 
 @class JoinViewController;
 
@@ -18,7 +17,7 @@
 
 @end
 
-@interface JoinViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, MatchmakingClientDelegate>
+@interface JoinViewController : UIViewController
 
 @property (nonatomic, weak) id <JoinViewControllerDelegate> delegate;
 

@@ -6,7 +6,6 @@
 //  Copyright (c) 2015年 Zhu Dengquan. All rights reserved.
 //
 
-#import "MatchmakingServer.h"
 
 @class HostViewController;
 
@@ -17,7 +16,7 @@
 
 @end
 
-@interface HostViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, MatchmakingServerDelegate>
+@interface HostViewController : UIViewController
 
 @property (nonatomic, weak) id <HostViewControllerDelegate> delegate;
 

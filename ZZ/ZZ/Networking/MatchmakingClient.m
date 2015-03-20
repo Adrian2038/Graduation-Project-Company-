@@ -39,6 +39,8 @@ ClientState;
     return self;
 }
 
+#pragma mark - Outside classes use
+
 - (void)startSearchingForServersWithSessionID:(NSString *)sessionID
 {
     if (_clientState == ClientStateIdle)
@@ -46,7 +48,9 @@ ClientState;
         _clientState = ClientStateSearchingForServers;
         _availableServers = [NSMutableArray arrayWithCapacity:10];
         
-        _session = [[GKSession alloc] initWithSessionID:sessionID displayName:nil sessionMode:GKSessionModeClient];
+        _session = [[GKSession alloc] initWithSessionID:sessionID
+                                            displayName:nil
+                                            sessionMode:GKSessionModeClient];
         _session.delegate = self;
         _session.available = YES;
     }
@@ -64,6 +68,38 @@ ClientState;
     _clientState = ClientStateConnecting;
     _serverPeerID = peerID;
     [_session connectToPeer:peerID withTimeout:_session.disconnectTimeout];
+}
+
+- (NSUInteger)availableServerCount
+{
+    return [_availableServers count];
+}
+
+- (NSString *)peerIDForAvailableServerAtIndex:(NSUInteger)index
+{
+    return [_availableServers objectAtIndex:index];
+}
+
+- (NSString *)displayNameForPeerID:(NSString *)peerID
+{
+    return [_session displayNameForPeer:peerID];
+}
+
+- (void)disconnectFromServer
+{
+    NSAssert(_clientState != ClientStateIdle, @"Wrong state");
+    
+    _clientState = ClientStateIdle;
+    
+    [_session disconnectFromAllPeers];
+    _session.available = NO;
+    _session.delegate = nil;
+    _session = nil;
+    
+    _availableServers = nil;
+    
+    [self.delegate matchmakingClient:self didDisconnectFromServer:_serverPeerID];
+    _serverPeerID = nil;
 }
 
 #pragma mark - GKSessionDelegate
@@ -148,38 +184,6 @@ ClientState;
             [self disconnectFromServer];
         }
     }
-}
-
-- (NSUInteger)availableServerCount
-{
-    return [_availableServers count];
-}
-
-- (NSString *)peerIDForAvailableServerAtIndex:(NSUInteger)index
-{
-    return [_availableServers objectAtIndex:index];
-}
-
-- (NSString *)displayNameForPeerID:(NSString *)peerID
-{
-    return [_session displayNameForPeer:peerID];
-}
-
-- (void)disconnectFromServer
-{
-    NSAssert(_clientState != ClientStateIdle, @"Wrong state");
-    
-    _clientState = ClientStateIdle;
-    
-    [_session disconnectFromAllPeers];
-    _session.available = NO;
-    _session.delegate = nil;
-    _session = nil;
-    
-    _availableServers = nil;
-    
-    [self.delegate matchmakingClient:self didDisconnectFromServer:_serverPeerID];
-    _serverPeerID = nil;
 }
 
 #pragma mark - Dealloc

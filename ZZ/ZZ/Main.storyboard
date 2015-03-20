@@ -135,6 +135,9 @@
                                 <state key="highlighted" image="ExitButtonPressed.png">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="exitAction:" destination="JuU-Ie-H2o" eventType="touchUpInside" id="G6w-wB-Zbs"/>
+                                </connections>
                             </button>
                             <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" fixedFrame="YES" image="TableViewBorder.png" translatesAutoresizingMaskIntoConstraints="NO" id="ebd-qe-Iuz">
                                 <rect key="frame" x="58" y="115" width="458" height="150"/>
@@ -148,6 +151,13 @@
                     </view>
                     <navigationItem key="navigationItem" id="z9T-9T-Bq0"/>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                    <connections>
+                        <outlet property="headingLabel" destination="xBR-8o-nDq" id="zLC-OT-sLh"/>
+                        <outlet property="nameLabel" destination="Jwx-N5-0NR" id="gm1-ek-m9a"/>
+                        <outlet property="nameTextField" destination="0Aj-Rp-wjH" id="Wua-Yf-seN"/>
+                        <outlet property="statusLabel" destination="hsB-oe-hxH" id="8Ht-zA-Q81"/>
+                        <outlet property="tableView" destination="B8T-07-wq7" id="rkh-UE-0jC"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zei-rG-1u1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -193,7 +203,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vnR-di-dQQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2534" y="424"/>
+            <point key="canvasLocation" x="2494" y="586"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="j3D-im-gxj">
@@ -237,7 +247,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OQk-e1-n9T" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2824" y="9"/>
+            <point key="canvasLocation" x="2794" y="115"/>
         </scene>
         <!--Host View Controller-->
         <scene sceneID="pQg-gh-QrR">
@@ -358,7 +368,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oSX-Bh-Gql" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="285" y="56"/>
+            <point key="canvasLocation" x="429" y="62"/>
         </scene>
     </scenes>
     <resources>

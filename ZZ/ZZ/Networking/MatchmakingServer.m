@@ -38,6 +38,8 @@ ServerState;
     return self;
 }
 
+#pragma mark - Outside classes use
+
 - (void)startAcceptingConnectionsForSessionID:(NSString *)sessionID
 {
     if (_serverState == ServerStateIdle)
@@ -45,7 +47,9 @@ ServerState;
         _serverState = ServerStateAcceptingConnections;
         _connectedClients = [NSMutableArray arrayWithCapacity:self.maxClients];
         
-        _session = [[GKSession alloc] initWithSessionID:sessionID displayName:nil sessionMode:GKSessionModeServer];
+        _session = [[GKSession alloc] initWithSessionID:sessionID
+                                            displayName:nil
+                                            sessionMode:GKSessionModeServer];
         _session.delegate = self;
         _session.available = YES;
     }
@@ -54,6 +58,37 @@ ServerState;
 - (NSArray *)connectedClients
 {
     return _connectedClients;
+}
+
+- (NSUInteger)connectedClientCount
+{
+    return [_connectedClients count];
+}
+
+- (NSString *)peerIDForConnectedClientAtIndex:(NSUInteger)index
+{
+    return [_connectedClients objectAtIndex:index];
+}
+
+- (NSString *)displayNameForPeerID:(NSString *)peerID
+{
+    return [_session displayNameForPeer:peerID];
+}
+
+- (void)endSession
+{
+    NSAssert(_serverState != ServerStateIdle, @"Wrong state");
+    
+    _serverState = ServerStateIdle;
+    
+    [_session disconnectFromAllPeers];
+    _session.available = NO;
+    _session.delegate = nil;
+    _session = nil;
+    
+    _connectedClients = nil;
+    
+    [self.delegate matchmakingServerSessionDidEnd:self];
 }
 
 #pragma mark - GKSessionDelegate
@@ -134,37 +169,6 @@ ServerState;
             [self endSession];
         }
     }
-}
-
-- (NSUInteger)connectedClientCount
-{
-    return [_connectedClients count];
-}
-
-- (NSString *)peerIDForConnectedClientAtIndex:(NSUInteger)index
-{
-    return [_connectedClients objectAtIndex:index];
-}
-
-- (NSString *)displayNameForPeerID:(NSString *)peerID
-{
-    return [_session displayNameForPeer:peerID];
-}
-
-- (void)endSession
-{
-    NSAssert(_serverState != ServerStateIdle, @"Wrong state");
-    
-    _serverState = ServerStateIdle;
-    
-    [_session disconnectFromAllPeers];
-    _session.available = NO;
-    _session.delegate = nil;
-    _session = nil;
-    
-    _connectedClients = nil;
-    
-    [self.delegate matchmakingServerSessionDidEnd:self];
 }
 
 #pragma mark - Dealloc
