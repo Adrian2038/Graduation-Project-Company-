@@ -54,6 +54,7 @@ ClientState;
         _session.delegate = self;
         _session.available = YES;
     }
+    NSLog(@"Client start searching");
 }
 
 - (NSArray *)availableServers
@@ -72,6 +73,8 @@ ClientState;
 
 - (NSUInteger)availableServerCount
 {
+    NSLog(@"available server count = %d", [_availableServers count]);
+
     return [_availableServers count];
 }
 

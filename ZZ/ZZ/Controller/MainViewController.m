@@ -62,7 +62,24 @@
     return UIInterfaceOrientationIsLandscape(interfaceOrientation);
 }
 
-#pragma mark - The actions I may not use.
+#pragma mark - Segue
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{    
+    if ([segue.identifier isEqualToString:@"Host Game"]) {
+        if ([segue.destinationViewController isKindOfClass:[HostViewController class]]) {
+            HostViewController *hostViewController = (HostViewController *)segue.destinationViewController;
+            hostViewController.delegate = self;
+        }
+    } else if ([segue.identifier isEqualToString:@"Join Game"]) {
+        if ([segue.destinationViewController isKindOfClass:[JoinViewController class]]) {
+            JoinViewController *joinViewController = (JoinViewController *)segue.destinationViewController;
+            joinViewController.delegate = self;
+        }
+    }
+}
+
+#pragma mark - Actions , that I may use segue replace it.
 
 - (IBAction)hostGameAction:(id)sender
 {
@@ -98,6 +115,8 @@
 {
 }
 
+#pragma mark - Animation
+
 - (void)prepareForIntroAnimation
 {
     self.hostGameButton.alpha = 0.0f;
@@ -106,8 +125,6 @@
     
     _buttonsEnabled = NO;
 }
-
-#pragma mark - Animation
 
 - (void)performIntroAnimation
 {
@@ -174,7 +191,7 @@
 
 - (void)hostViewControllerDidCancel:(HostViewController *)controller
 {
-    [self dismissViewControllerAnimated:NO completion:nil];
+    [self.navigationController popToViewController:self animated:YES];
 }
 
 - (void)hostViewController:(HostViewController *)controller didEndSessionWithReason:(QuitReason)reason
@@ -189,7 +206,7 @@
 
 - (void)joinViewControllerDidCancel:(JoinViewController *)controller
 {
-    [self dismissViewControllerAnimated:NO completion:nil];
+    [self.navigationController popToViewController:self animated:YES];
 }
 
 - (void)joinViewController:(JoinViewController *)controller didDisconnectWithReason:(QuitReason)reason
@@ -200,10 +217,8 @@
     }
     else if (reason == QuitReasonConnectionDropped)
     {
-        [self dismissViewControllerAnimated:NO completion:^
-         {
-             [self showDisconnectedAlert];
-         }];
+        [self.navigationController popToViewController:self animated:YES];
+        [self showDisconnectedAlert];
     }
 }
 

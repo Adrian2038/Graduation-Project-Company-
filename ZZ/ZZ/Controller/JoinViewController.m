@@ -26,8 +26,10 @@
 @property (nonatomic, weak) IBOutlet UILabel *statusLabel;
 @property (nonatomic, weak) IBOutlet UITableView *tableView;
 
-@property (nonatomic, strong) IBOutlet UIView *waitView;
-@property (nonatomic, weak) IBOutlet UILabel *waitLabel;
+@property (nonatomic, strong) UIView *waitView;
+@property (nonatomic, strong) UILabel *waitLabel;
+@property (nonatomic, strong) UIButton *waitButton;
+
 @end
 
 @implementation JoinViewController
@@ -41,8 +43,26 @@
     self.headingLabel.font = [UIFont rw_snapFontWithSize:24.0f];
     self.nameLabel.font = [UIFont rw_snapFontWithSize:16.0f];
     self.statusLabel.font = [UIFont rw_snapFontWithSize:16.0f];
-    self.waitLabel.font = [UIFont rw_snapFontWithSize:18.0f];
     self.nameTextField.font = [UIFont rw_snapFontWithSize:20.0f];
+    
+    // Set the wait view info (instead use the IB)
+    self.waitView = [[UIView alloc] initWithFrame:self.view.bounds];
+    self.waitView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Felt"]];
+    
+    CGRect labelframe = CGRectMake(self.waitView.center.x - 50, self.waitView.center.y, 100, 30);
+    self.waitLabel = [[UILabel alloc] initWithFrame:labelframe];
+    self.waitLabel.textAlignment = NSTextAlignmentCenter;
+    self.waitLabel.text = @"游戏连接中...";
+    self.waitLabel.textColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Button"]];
+    self.waitLabel.font = [UIFont rw_snapFontWithSize:18.0f];
+    [self.waitView addSubview:self.waitLabel];
+    self.waitButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    
+    CGRect buttonFrame = CGRectMake(16 , self.waitView.frame.size.height - 60, 44, 44);
+    self.waitButton.frame = buttonFrame;
+    [self.waitButton setBackgroundImage:[UIImage imageNamed:@"ExitButton"] forState:UIControlStateNormal];
+    [self.waitButton setBackgroundImage:[UIImage imageNamed:@"ExitButton"] forState:UIControlStateHighlighted];
+    [self.waitView addSubview:self.waitButton];
     
     UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc]
                                                  initWithTarget:self.nameTextField

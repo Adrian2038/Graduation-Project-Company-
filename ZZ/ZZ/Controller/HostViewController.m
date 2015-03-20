@@ -46,7 +46,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+        
     self.headingLabel.font = [UIFont rw_snapFontWithSize:24.0f];;
     self.nameLabel.font = [UIFont rw_snapFontWithSize:16.0f];
     self.statusLabel.font = [UIFont rw_snapFontWithSize:16.0f];
