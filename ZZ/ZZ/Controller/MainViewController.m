@@ -17,6 +17,7 @@
 
 {
     BOOL _buttonsEnabled;
+    BOOL _performAnimations;
 }
 
 @property (nonatomic, weak) IBOutlet UIButton *hostGameButton;
@@ -27,6 +28,15 @@
 
 @implementation MainViewController
 
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        _performAnimations = YES;
+    }
+    
+    return self;
+}
 
 #pragma mark - LifeCycle of vc
 
@@ -47,14 +57,18 @@
 {
     [super viewWillAppear:animated];
     
-    [self prepareForIntroAnimation];
+    if (_performAnimations) {
+        [self prepareForIntroAnimation];
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
     
-    [self performIntroAnimation];
+    if (_performAnimations) {
+        [self performIntroAnimation];
+    }
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -220,6 +234,18 @@
         [self.navigationController popToViewController:self animated:YES];
         [self showDisconnectedAlert];
     }
+}
+
+- (void)joinViewController:(JoinViewController *)controller
+      startGameWithSession:(GKSession *)session
+                playerName:(NSString *)name
+                    server:(NSString *)peerID
+{
+    _performAnimations = NO;
+    
+    [self.navigationController popToViewController:self animated:NO];
+    
+    // The logic of the Game Model...
 }
 
 #pragma mark - Dealloc
