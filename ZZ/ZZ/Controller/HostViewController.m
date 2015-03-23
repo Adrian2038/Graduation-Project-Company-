@@ -71,7 +71,7 @@
 {
     [super viewDidAppear:animated];
     
-    if (_matchmakingServer == nil)
+    if (!_matchmakingServer)
     {
         _matchmakingServer = [[MatchmakingServer alloc] init];
         _matchmakingServer.maxClients = 7;
@@ -116,7 +116,7 @@
     static NSString *CellIdentifier = @"CellID";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil)
+    if (!cell)
         cell = [[PeerCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     
     NSString *peerID = [_matchmakingServer peerIDForConnectedClientAtIndex:indexPath.row];

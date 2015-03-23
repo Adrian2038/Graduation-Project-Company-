@@ -111,6 +111,7 @@ ClientState;
 {
     NSLog(@"MatchmakingClient: peer %@ changed state %d", peerID, state);
     
+    NSLog(@"state = %d", state);
     switch (state)
     {
             // The client has discovered a new server.

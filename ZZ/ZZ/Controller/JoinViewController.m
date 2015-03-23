@@ -81,7 +81,7 @@
 {
     [super viewDidAppear:animated];
     
-    if (_matchmakingClient == nil)
+    if (!_matchmakingClient)
     {
         _quitReason = QuitReasonConnectionDropped;
         
@@ -123,7 +123,7 @@
     static NSString *CellIdentifier = @"CellID";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil)
+    if (!cell)
         cell = [[PeerCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     
     NSString *peerID = [_matchmakingClient peerIDForAvailableServerAtIndex:indexPath.row];

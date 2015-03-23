@@ -52,6 +52,7 @@ ServerState;
                                             sessionMode:GKSessionModeServer];
         _session.delegate = self;
         _session.available = YES;
+        NSLog(@"session.peer = %@", _session.peerID);
     }
     NSLog(@"start broadcast ");
 }
