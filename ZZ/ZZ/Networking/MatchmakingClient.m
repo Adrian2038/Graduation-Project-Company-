@@ -54,7 +54,6 @@ ClientState;
         _session.delegate = self;
         _session.available = YES;
     }
-    NSLog(@"Client start searching");
 }
 
 - (NSArray *)availableServers
@@ -73,8 +72,6 @@ ClientState;
 
 - (NSUInteger)availableServerCount
 {
-    NSLog(@"available server count = %d", [_availableServers count]);
-
     return [_availableServers count];
 }
 
@@ -111,7 +108,6 @@ ClientState;
 {
     NSLog(@"MatchmakingClient: peer %@ changed state %d", peerID, state);
     
-    NSLog(@"state = %d", state);
     switch (state)
     {
             // The client has discovered a new server.

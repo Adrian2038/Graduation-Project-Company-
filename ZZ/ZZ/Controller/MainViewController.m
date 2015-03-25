@@ -28,26 +28,12 @@
 
 @implementation MainViewController
 
-- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        _performAnimations = YES;
-    }
-    
-    return self;
-}
-
 #pragma mark - LifeCycle of vc
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    // I don't want the naviBar.
-    [self.navigationController setNavigationBarHidden:YES];
-    [self.navigationController setToolbarHidden:YES];
-    
+        
     [self.hostGameButton rw_applySnapStyle];
     [self.joinGameButton rw_applySnapStyle];
     [self.singlePlayerGameButton rw_applySnapStyle];
@@ -56,6 +42,8 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    _performAnimations = YES;
     
     if (_performAnimations) {
         [self prepareForIntroAnimation];
@@ -79,16 +67,21 @@
 #pragma mark - Segue
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{    
-    if ([segue.identifier isEqualToString:@"Host Game"]) {
-        if ([segue.destinationViewController isKindOfClass:[HostViewController class]]) {
-            HostViewController *hostViewController = (HostViewController *)segue.destinationViewController;
-            hostViewController.delegate = self;
-        }
-    } else if ([segue.identifier isEqualToString:@"Join Game"]) {
-        if ([segue.destinationViewController isKindOfClass:[JoinViewController class]]) {
-            JoinViewController *joinViewController = (JoinViewController *)segue.destinationViewController;
-            joinViewController.delegate = self;
+{
+    if (_buttonsEnabled)
+    {
+        if ([segue.identifier isEqualToString:@"Host Game"]) {
+            if ([segue.destinationViewController isKindOfClass:[UINavigationController class]]) {
+                UINavigationController *naviController = (UINavigationController *)segue.destinationViewController;
+                HostViewController *hostViewController = [naviController viewControllers][0];
+                hostViewController.delegate = self;
+            }
+        } else if ([segue.identifier isEqualToString:@"Join Game"]) {
+            if ([segue.destinationViewController isKindOfClass:[UINavigationController class]]) {
+                UINavigationController *naviController = (UINavigationController *)segue.destinationViewController;
+                JoinViewController *joinViewController = [naviController viewControllers][0];
+                joinViewController.delegate = self;
+            }
         }
     }
 }
@@ -97,32 +90,10 @@
 
 - (IBAction)hostGameAction:(id)sender
 {
-    if (_buttonsEnabled)
-    {
-        [self performExitAnimationWithCompletionBlock:^(BOOL finished)
-         {
-             HostViewController *controller = [[HostViewController alloc] initWithNibName:@"HostViewController"
-                                                                                   bundle:nil];
-             controller.delegate = self;
-             
-             [self presentViewController:controller animated:NO completion:nil];
-         }];
-    }
 }
 
 - (IBAction)joinGameAction:(id)sender
 {
-    if (_buttonsEnabled)
-    {
-        [self performExitAnimationWithCompletionBlock:^(BOOL finished)
-         {
-             JoinViewController *controller = [[JoinViewController alloc] initWithNibName:@"JoinViewController"
-                                                                                   bundle:nil];
-             controller.delegate = self;
-             
-             [self presentViewController:controller animated:NO completion:nil];
-         }];
-    }
 }
 
 - (IBAction)singlePlayerGameAction:(id)sender
@@ -160,6 +131,8 @@
 
 - (void)performExitAnimationWithCompletionBlock:(void (^)(BOOL))block
 {
+    NSLog(@"not segue block");
+    
     _buttonsEnabled = NO;
     
     [UIView animateWithDuration:0.3f
@@ -205,7 +178,7 @@
 
 - (void)hostViewControllerDidCancel:(HostViewController *)controller
 {
-    [self.navigationController popToViewController:self animated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)hostViewController:(HostViewController *)controller didEndSessionWithReason:(QuitReason)reason
@@ -220,7 +193,7 @@
 
 - (void)joinViewControllerDidCancel:(JoinViewController *)controller
 {
-    [self.navigationController popToViewController:self animated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)joinViewController:(JoinViewController *)controller didDisconnectWithReason:(QuitReason)reason
@@ -231,8 +204,10 @@
     }
     else if (reason == QuitReasonConnectionDropped)
     {
-        [self.navigationController popToViewController:self animated:YES];
-        [self showDisconnectedAlert];
+        [self dismissViewControllerAnimated:NO completion:^
+         {
+             [self showDisconnectedAlert];
+         }];
     }
 }
 

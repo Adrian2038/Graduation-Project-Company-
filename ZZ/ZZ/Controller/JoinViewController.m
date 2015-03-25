@@ -40,6 +40,10 @@
 {
     [super viewDidLoad];
     
+    // I don't want the naviBar.
+    [self.navigationController setNavigationBarHidden:YES];
+    [self.navigationController setToolbarHidden:YES];
+
     self.headingLabel.font = [UIFont rw_snapFontWithSize:24.0f];
     self.nameLabel.font = [UIFont rw_snapFontWithSize:16.0f];
     self.statusLabel.font = [UIFont rw_snapFontWithSize:16.0f];
@@ -69,6 +73,8 @@
                                                  action:@selector(resignFirstResponder)];
     gestureRecognizer.cancelsTouchesInView = NO;
     [self.view addGestureRecognizer:gestureRecognizer];
+    
+    NSLog(@"%@", self);
 }
 
 - (void)viewDidUnload
