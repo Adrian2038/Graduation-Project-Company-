@@ -17,7 +17,7 @@
 @end
 
 
-@interface GameViewController : UIViewController
+@interface GameViewController : UIViewController <GameDelegate>
 
 @property (nonatomic, weak) id <GameViewControllerDelegate> delegate;
 

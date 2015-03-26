@@ -11,12 +11,13 @@
 @protocol GameDelegate <NSObject>
 
 - (void)game:(Game *)game didQuitWithReason:(QuitReason)reason;
+- (void)gameWaitingForServerReady:(Game *)game;
 
 @end
 
 @interface Game : NSObject
 
-@property (nonatomic, weak) id <GameDelegate>delegate;
+@property (nonatomic, weak) id <GameDelegate> delegate;
 
 @property (nonatomic, assign) BOOL isServer;
 

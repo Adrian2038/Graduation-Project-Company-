@@ -40,12 +40,30 @@ GameState;
                         playerName:(NSString *)name
                             server:(NSString *)peerID
 {
+    self.isServer = NO;
     
+    _session = session;
+    _session.available = NO;
+    _session.delegate = self;
+    [_session setDataReceiveHandler:self withContext:nil];
+    
+    _serverPeerID = peerID;
+    _localPlayerName = name;
+    
+    _state = GameStateWaitingForSignIn;
+    
+    [self.delegate gameWaitingForServerReady:self];
 }
 
 - (void)quitGameWithReason:(QuitReason)reason
 {
+    _state = GameStateQuitting;
     
+    [_session disconnectFromAllPeers];
+    _session.delegate = nil;
+    _session = nil;
+    
+    [self.delegate game:self didQuitWithReason:reason];
 }
 
 #pragma mark - GKSessionDelegate
