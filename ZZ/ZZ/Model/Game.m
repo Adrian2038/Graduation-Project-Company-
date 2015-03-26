@@ -8,8 +8,82 @@
 
 #import "Game.h"
 
+typedef enum
+{
+    GameStateWaitingForSignIn,
+    GameStateWaitingForReady,
+    GameStateDealing,
+    GameStatePlaying,
+    GameStateGameOver,
+    GameStateQuitting,
+}
+GameState;
+
+@interface Game () <GKSessionDelegate>
+
+{
+    GameState _state;
+    
+    GKSession *_session;
+    NSString *_serverPeerID;
+    NSString *_localPlayerName;
+}
+
+@end
+
 @implementation Game
 
 
+#pragma mark - Methods ,which outside objects use them
+
+- (void)startClientGameWithSession:(GKSession *)session
+                        playerName:(NSString *)name
+                            server:(NSString *)peerID
+{
+    
+}
+
+- (void)quitGameWithReason:(QuitReason)reason
+{
+    
+}
+
+#pragma mark - GKSessionDelegate
+
+- (void)session:(GKSession *)session peer:(NSString *)peerID didChangeState:(GKPeerConnectionState)state
+{
+    NSLog(@"Game : peer %@ changed state %d", peerID, state);
+}
+
+- (void)session:(GKSession *)session didReceiveConnectionRequestFromPeer:(NSString *)peerID
+{
+    NSLog(@"Game : connection request from peer %@", peerID);
+    
+    [session denyConnectionFromPeer:peerID];
+}
+
+- (void)session:(GKSession *)session connectionWithPeerFailed:(NSString *)peerID withError:(NSError *)error
+{
+    NSLog(@"Game : connection with peer %@ failed %@", peerID, error);
+}
+
+- (void)session:(GKSession *)session didFailWithError:(NSError *)error
+{
+    NSLog(@"Game : session failed %@", error);
+}
+
+#pragma mark - GKSession Data Receive Handler
+
+- (void)receiveData:(NSData *)data formPeer:(NSString *)peerID inSession:(GKSession *)session context:(void *)context
+{
+    NSLog(@"Game : receive data from peer %@ data %@ length %d", peerID, data, [data length]);
+}
+
+#pragma mark - Dealloc
+
+- (void)dealloc
+{
+    NSLog(@"dealloc %@", self);
+}
 
 @end
