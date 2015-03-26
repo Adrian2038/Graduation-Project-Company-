@@ -10,10 +10,14 @@
 #import "MainViewController.h"
 #import "HostViewController.h"
 #import "JoinViewController.h"
+#import "GameViewController.h"
+
+#import "Game.h"
 
 #import "UIButton+SnapAdditions.h"
 
-@interface MainViewController () <HostViewControllerDelegate, JoinViewControllerDelegate>
+@interface MainViewController ()
+<HostViewControllerDelegate, JoinViewControllerDelegate, GameViewControllerDelegate>
 
 {
     BOOL _buttonsEnabled;
@@ -174,6 +178,22 @@
     [alertView show];
 }
 
+#pragma mark - Game block
+
+- (void)startGameWithBlock:(void(^)(Game *))block
+{
+    GameViewController *gameViewController = [[GameViewController alloc] init];
+    gameViewController.delegate = self;
+    
+    [self presentViewController:gameViewController animated:NO completion:^
+     {
+         Game *game = [[Game alloc] init];
+         gameViewController.game = game;
+         game.delegate = gameViewController;
+         block(game);
+     }];
+}
+
 #pragma mark - HostViewControllerDelegate
 
 - (void)hostViewControllerDidCancel:(HostViewController *)controller
@@ -218,9 +238,27 @@
 {
     _performAnimations = NO;
     
-    [self.navigationController popToViewController:self animated:NO];
-    
-    // The logic of the Game Model...
+    [self dismissViewControllerAnimated:NO completion:^
+    {
+        _performAnimations = YES;
+        
+        [self startGameWithBlock:^(Game *game)
+        {
+            [game startClientGameWithSession:session playerName:name server:peerID];
+        }];
+    }];
+}
+
+#pragma mark - GameViewControllerDelegate
+
+- (void)gameViewController:(GameViewController *)controller didQuitWithReason:(QuitReason)reason
+{
+    [self dismissViewControllerAnimated:NO completion:^
+    {
+        if (reason == QuitReasonConnectionDropped) {
+            [self showDisconnectedAlert];
+        }
+    }];
 }
 
 #pragma mark - Dealloc

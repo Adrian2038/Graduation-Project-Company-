@@ -10,6 +10,7 @@
 		531E61FA1AB2C70E003A0013 /* Action_Man.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 531E61F91AB2C70E003A0013 /* Action_Man.ttf */; };
 		531E62001AB2C71A003A0013 /* UIButton+SnapAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 531E61FD1AB2C71A003A0013 /* UIButton+SnapAdditions.m */; };
 		531E62011AB2C71A003A0013 /* UIFont+SnapAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 531E61FF1AB2C71A003A0013 /* UIFont+SnapAdditions.m */; };
+		5332A2F11AC3E81E0084691E /* GameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5332A2F01AC3E81E0084691E /* GameViewController.m */; };
 		537277561AB29B12001D5649 /* Button.png in Resources */ = {isa = PBXBuildFile; fileRef = 5372772F1AB29B12001D5649 /* Button.png */; };
 		537277571AB29B12001D5649 /* Button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 537277301AB29B12001D5649 /* Button@2x.png */; };
 		537277581AB29B12001D5649 /* ButtonPressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 537277311AB29B12001D5649 /* ButtonPressed.png */; };
@@ -50,6 +51,7 @@
 		5372777B1AB29B12001D5649 /* TextField.png in Resources */ = {isa = PBXBuildFile; fileRef = 537277541AB29B12001D5649 /* TextField.png */; };
 		5372777C1AB29B12001D5649 /* TextField@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 537277551AB29B12001D5649 /* TextField@2x.png */; };
 		5372777E1AB29BED001D5649 /* Set-game-cards.png in Resources */ = {isa = PBXBuildFile; fileRef = 5372777D1AB29BED001D5649 /* Set-game-cards.png */; };
+		5382B8F81AC3EB6D0044CEF8 /* Game.m in Sources */ = {isa = PBXBuildFile; fileRef = 5382B8F71AC3EB6D0044CEF8 /* Game.m */; };
 		538600331AB9113700E554E6 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 538600321AB9113700E554E6 /* GameKit.framework */; };
 		538600371AB911F700E554E6 /* MatchmakingServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 538600361AB911F700E554E6 /* MatchmakingServer.m */; };
 		5386003C1AB9204A00E554E6 /* MatchmakingClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 5386003B1AB9204A00E554E6 /* MatchmakingClient.m */; };
@@ -81,6 +83,8 @@
 		531E61FD1AB2C71A003A0013 /* UIButton+SnapAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+SnapAdditions.m"; sourceTree = "<group>"; };
 		531E61FE1AB2C71A003A0013 /* UIFont+SnapAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIFont+SnapAdditions.h"; sourceTree = "<group>"; };
 		531E61FF1AB2C71A003A0013 /* UIFont+SnapAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIFont+SnapAdditions.m"; sourceTree = "<group>"; };
+		5332A2EF1AC3E81E0084691E /* GameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameViewController.h; path = Controller/GameViewController.h; sourceTree = "<group>"; };
+		5332A2F01AC3E81E0084691E /* GameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameViewController.m; path = Controller/GameViewController.m; sourceTree = "<group>"; };
 		5372772F1AB29B12001D5649 /* Button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Button.png; sourceTree = "<group>"; };
 		537277301AB29B12001D5649 /* Button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Button@2x.png"; sourceTree = "<group>"; };
 		537277311AB29B12001D5649 /* ButtonPressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ButtonPressed.png; sourceTree = "<group>"; };
@@ -121,6 +125,8 @@
 		537277541AB29B12001D5649 /* TextField.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TextField.png; sourceTree = "<group>"; };
 		537277551AB29B12001D5649 /* TextField@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TextField@2x.png"; sourceTree = "<group>"; };
 		5372777D1AB29BED001D5649 /* Set-game-cards.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Set-game-cards.png"; sourceTree = "<group>"; };
+		5382B8F61AC3EB6D0044CEF8 /* Game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Game.h; path = Model/Game.h; sourceTree = "<group>"; };
+		5382B8F71AC3EB6D0044CEF8 /* Game.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Game.m; path = Model/Game.m; sourceTree = "<group>"; };
 		538600321AB9113700E554E6 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		538600351AB911F700E554E6 /* MatchmakingServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MatchmakingServer.h; path = Networking/MatchmakingServer.h; sourceTree = "<group>"; };
 		538600361AB911F700E554E6 /* MatchmakingServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MatchmakingServer.m; path = Networking/MatchmakingServer.m; sourceTree = "<group>"; };
@@ -225,6 +231,15 @@
 			path = Images;
 			sourceTree = "<group>";
 		};
+		5382B8F51AC3EB330044CEF8 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				5382B8F61AC3EB6D0044CEF8 /* Game.h */,
+				5382B8F71AC3EB6D0044CEF8 /* Game.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
 		538600341AB911CB00E554E6 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
@@ -272,6 +287,7 @@
 				53AFC90C1AB2914300DBFCAE /* Controller */,
 				538600341AB911CB00E554E6 /* Networking */,
 				5386003D1AB932FE00E554E6 /* View */,
+				5382B8F51AC3EB330044CEF8 /* Model */,
 				531E61FB1AB2C71A003A0013 /* Categories */,
 				5372772E1AB29B12001D5649 /* Images */,
 				53AFC8E31AB285E200DBFCAE /* Supporting Files */,
@@ -319,6 +335,8 @@
 				53AFC90A1AB2912900DBFCAE /* HostViewController.m */,
 				53AFC90D1AB292AB00DBFCAE /* JoinViewController.h */,
 				53AFC90E1AB292AB00DBFCAE /* JoinViewController.m */,
+				5332A2EF1AC3E81E0084691E /* GameViewController.h */,
+				5332A2F01AC3E81E0084691E /* GameViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -466,7 +484,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				53AFC90B1AB2912900DBFCAE /* HostViewController.m in Sources */,
+				5332A2F11AC3E81E0084691E /* GameViewController.m in Sources */,
 				531E62011AB2C71A003A0013 /* UIFont+SnapAdditions.m in Sources */,
+				5382B8F81AC3EB6D0044CEF8 /* Game.m in Sources */,
 				5386003C1AB9204A00E554E6 /* MatchmakingClient.m in Sources */,
 				538600371AB911F700E554E6 /* MatchmakingServer.m in Sources */,
 				53AFC90F1AB292AB00DBFCAE /* JoinViewController.m in Sources */,
