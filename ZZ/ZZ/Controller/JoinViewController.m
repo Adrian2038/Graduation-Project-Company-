@@ -49,32 +49,11 @@
     self.statusLabel.font = [UIFont rw_snapFontWithSize:16.0f];
     self.nameTextField.font = [UIFont rw_snapFontWithSize:20.0f];
     
-    // Set the wait view info (instead use the IB)
-    self.waitView = [[UIView alloc] initWithFrame:self.view.bounds];
-    self.waitView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Felt"]];
-    
-    CGRect labelframe = CGRectMake(self.waitView.center.x - 50, self.waitView.center.y, 100, 30);
-    self.waitLabel = [[UILabel alloc] initWithFrame:labelframe];
-    self.waitLabel.textAlignment = NSTextAlignmentCenter;
-    self.waitLabel.text = @"游戏连接中...";
-    self.waitLabel.textColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Button"]];
-    self.waitLabel.font = [UIFont rw_snapFontWithSize:18.0f];
-    [self.waitView addSubview:self.waitLabel];
-    self.waitButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    
-    CGRect buttonFrame = CGRectMake(16 , self.waitView.frame.size.height - 60, 44, 44);
-    self.waitButton.frame = buttonFrame;
-    [self.waitButton setBackgroundImage:[UIImage imageNamed:@"ExitButton"] forState:UIControlStateNormal];
-    [self.waitButton setBackgroundImage:[UIImage imageNamed:@"ExitButton"] forState:UIControlStateHighlighted];
-    [self.waitView addSubview:self.waitButton];
-    
     UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc]
                                                  initWithTarget:self.nameTextField
                                                  action:@selector(resignFirstResponder)];
     gestureRecognizer.cancelsTouchesInView = NO;
     [self.view addGestureRecognizer:gestureRecognizer];
-    
-    NSLog(@"%@", self);
 }
 
 - (void)viewDidUnload
@@ -103,6 +82,23 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return UIInterfaceOrientationIsLandscape(interfaceOrientation);
+}
+
+#pragma mark - Waiting view
+
+- (void)showWaitingView
+{
+    CGRect viewFrame = CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height - 50);
+    self.waitView = [[UIView alloc] initWithFrame:viewFrame];
+    self.waitView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Felt"]];
+    [self.view addSubview:self.waitView];
+    
+    CGRect labelframe = CGRectMake(self.waitView.center.x - 100, self.waitView.center.y, 200, 30);
+    self.waitLabel = [[UILabel alloc] initWithFrame:labelframe];
+    self.waitLabel.textAlignment = NSTextAlignmentCenter;
+    self.waitLabel.text = @"游戏连接中...";
+    self.waitLabel.font = [UIFont rw_snapFontWithSize:18.0f];
+    [self.waitView addSubview:self.waitLabel];
 }
 
 #pragma mark - Action
@@ -146,7 +142,8 @@
     
     if (_matchmakingClient != nil)
     {
-        [self.view addSubview:self.waitView];
+        // The wait view may need some other way to present
+//        [self showWaitingView];
         
         NSString *peerID = [_matchmakingClient peerIDForAvailableServerAtIndex:indexPath.row];
         [_matchmakingClient connectToServerWithPeerID:peerID];
